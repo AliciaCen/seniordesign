@@ -51,3 +51,30 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// DOCUMENTATION:
+// https://www.npmjs.com/package/python-shell
+
+let {PythonShell} = require('python-shell')
+
+let pyshell1 = new PythonShell('testShell.py');
+let pyshell2 = new PythonShell('testShell.py');
+
+pyshell1.send('hello');
+
+pyshell1.on('message', function (m) {
+  console.log(m);
+});
+
+pyshell1.end(function (err,code,signal) {
+  if (err) throw err;
+  console.log('The exit code was: ' + code);
+  console.log('The exit signal was: ' + signal);
+  console.log('finished');
+});
+
+console.log("Printing in main to show that the python process runs independently")
+
+for (var i = 40; i < 50; i++){
+  console.log(i)
+}
