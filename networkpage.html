@@ -1,17 +1,86 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+      }
+      th {
+        text-align: left;
+      }
+    </style>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Application Name</title>
+    <title>Application Name</title>  
   </head>
   <Body>
         <h1>Name of Application</h1>
         We are using Node.js <span id="node-version"></span>,
         Chromium <span id="chrome-version"></span>,
         and Electron <span id="electron-version"></span>.
+        <!-- This is the implementation of the hard coded PNG and table-->
+        <h3>Fast Network Configuration</h3>
+        <img src="Fast_Network_Configuration.png" alt="Fast Network Configuration" style="width:150px;height:225px;">
+        <table style="width:100%">
+          <tr>
+            <th>Nodes</th>
+            <th>Connections</th> 
+          </tr>
+          <tr>
+            <td>Node 1</td>
+            <td>Node 2, Node 3, Node 4, Node 5</td>
+          </tr>
+          <tr>
+            <td>Node 2</td>
+            <td>Node 1, Node 3</td>
+          </tr>
+          <tr>
+            <td>Node 3</td>
+            <td>Node 1, Node 4</td>
+          </tr>
+          <tr>
+            <td>Node 4</td>
+            <td>Node 1, Node 3</td>
+          </tr>
+          <tr>
+            <td>Node 5</td>
+            <td>Node 1</td>
+          </tr>
+        </table>
+        <h3>Secure Network Configuration</h3>
+        <img src="Secure_Network_Configuration.png" alt="Secure Network Configuration" style="width:150px;height:225px;">
+        <table style="width:100%">
+          <tr>
+            <th>Nodes</th>
+            <th>Connections</th> 
+          </tr>
+          <tr>
+            <td>Node 1</td>
+            <td>Node 4, Node 5</td>
+          </tr>
+          <tr>
+            <td>Node 2</td>
+            <td>Node 3</td>
+          </tr>
+          <tr>
+            <td>Node 3</td>
+            <td>Node 2, Node 4</td>
+          </tr>
+          <tr>
+            <td>Node 4</td>
+            <td>Node 1, Node 5</td>
+          </tr>
+          <tr>
+            <td>Node 5</td>
+            <td>Node 1, Node 4</td>
+          </tr>
+        </table>
         <script src="./renderer.js"></script>
     </body>
 </html>
