@@ -57,7 +57,7 @@ app.on('activate', function () {
 
 let {PythonShell} = require('python-shell')
 
-let pyshell1 = new PythonShell('testShell.py');
+let pyshell1 = new PythonShell('SNC.py');
 let pyshell2 = new PythonShell('testShell.py');
 
 pyshell1.send('hello');
