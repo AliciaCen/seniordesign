@@ -71,9 +71,3 @@ pyshell1.end(function (err,code,signal) {
   console.log('The exit signal was: ' + signal);
   console.log('finished');
 });
-
-console.log("Printing in main to show that the python process runs independently")
-
-for (var i = 40; i < 50; i++){
-  console.log(i)
-}
