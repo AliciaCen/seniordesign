@@ -3,8 +3,9 @@
 	width: 100%;
 }
 .sidebar-header {
-	padding: 20px;
-	background: #6d7fcc;
+	padding: 10px;
+	background: #7386D5;
+	text-align: left;
 }
 #sidebar ul li a {
 	padding: 10px;
@@ -29,7 +30,7 @@ a, a:hover, a:focus {
 	top: 0;
 	left: 0;
 	height: 100%;
-	z-index: 999;
+	/* z-index: 999; */
 	background: #7386D5;
 	color: #fff;
 	transition: all 0.3s;
@@ -55,7 +56,7 @@ th {
 	height: 25px;
 	cursor: move;
 	z-index: 10;
-	background-color: #2196F3;
+	background-color: #7386D5;
 	color: #fff;
 }
 #toolboxContent {
@@ -65,4 +66,11 @@ th {
 }
 #hideButton {
 	overflow: hidden;
+}
+#title {
+	text-align: center;
+}
+#logo {
+	width: 20%;
+	padding-left: 40%;
 }
