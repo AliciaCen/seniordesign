@@ -1,5 +1,6 @@
 #Imports, currently unused
 import sys
+import json
 
 # Functions to have:
 # incidentEdges(node)				-> checkConnections()
@@ -22,9 +23,9 @@ class Node:
 		return "I am {}, a router with {} ports, a data rate of {}".format(self.name, self.ports, self.bitRate)
 
 	def connect(self, other):
-		if other not in self.connections:
-			self.connections.append(other)
-			other.connections.append(self)
+		if other.name not in self.connections:
+			self.connections.append(other.name)
+			other.connections.append(self.name)
 
 	def checkConnections(self):
 		for item in self.connections:
@@ -53,6 +54,9 @@ Router1.connect(Router4)
 Router4.connect(Router1)
 Router4.connect(Router2)
 
-Router1.checkConnections()
-print("="*40)
-Router4.checkConnections()
+# Router1.checkConnections()
+# print("="*40)
+# Router4.checkConnections()
+jsonStr = json.dumps(Router1.__dict__)
+
+print(jsonStr)
