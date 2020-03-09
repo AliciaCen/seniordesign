@@ -4,9 +4,9 @@ var onToolboxLoad = setInterval(function() {
 		clearInterval(onToolboxLoad);
 		dragElement(document.getElementById("toolbox")); // Begin watching for clicking
 
-		$("#hideButton").click(function(){ // Initialize hide button
-			$("#toolbox").toggle("show")
-		})
+		// $("#hideButton").click(function(){ // Initialize hide button
+		// 	$("#toolbox").toggle("show")
+		// })
 
 		// TEMP FOR DEMO
 		$("#fastConfig").click(function(){ 
