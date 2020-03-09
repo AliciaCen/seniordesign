@@ -9,8 +9,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -51,3 +51,23 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// DOCUMENTATION:
+// https://www.npmjs.com/package/python-shell
+
+let {PythonShell} = require('python-shell')
+
+let pyshell1 = new PythonShell('SNC.py');
+
+pyshell1.send('hello');
+
+pyshell1.on('message', function (m) {
+  console.log(m);
+});
+
+pyshell1.end(function (err,code,signal) {
+  if (err) throw err;
+  console.log('The exit code was: ' + code);
+  console.log('The exit signal was: ' + signal);
+  console.log('finished');
+});
