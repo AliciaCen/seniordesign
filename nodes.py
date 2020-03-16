@@ -32,11 +32,10 @@ class Node:
 			self.connections.append(other.name)
 			other.connections.append(self.name)
 
-	# Reads all existing connections
+	# Reads all existing connections as string
 	def checkConnections(self):
-		print (self.connections)
-		# for item in self.connections:
-		# 	print(item)
+		for item in self.connections:
+			print (item)
 
 	# Check to see if the node has that neighbor
 	# If so, delete it
@@ -100,4 +99,4 @@ for item in nodeList:
 # How to scan for specific router and relay it's connections
 for item in nodeList:
 	if item.name == "Router_1":
-		print (item.checkConnections())
+		item.checkConnections()
