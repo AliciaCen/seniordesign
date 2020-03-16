@@ -15,12 +15,12 @@ dataList = []
 #Basic class structure. Port and Rate are intended to be integers
 #Wireless is a boolean set to 0 or 1 and Connections is a list
 class Node:
-	def __init__(self, Name, Ports = 1, Rate = 0, Wireless = 0):
-		self.name = Name
-		self.ports = Ports
-		self.bitRate = Rate
-		self.wireless = Wireless
-		self.connections = []
+	def __init__(self, name, ports = 1, bitRate = 0, wireless = 0, connections = None):
+		self.name = name
+		self.ports = ports
+		self.bitRate = bitRate
+		self.wireless = wireless
+		self.connections = connections if connections is not None else []
 
 	def __str__(self):
 		return "I am {}, a router with {} ports, a data rate of {}".format(self.name, self.ports, self.bitRate)
@@ -73,14 +73,30 @@ Router1.connect(Router4)
 Router4.connect(Router1)
 Router4.connect(Router2)
 
+#print (Router1.checkConnections())
 data = json.dumps(Router1.__dict__, indent=4)
-print (data)
+#print (data)
 
-decodedData = Node.from_json(json.loads(data))
-print (decodedData)
+decodedData = Node(**json.loads(data))
+#print (decodedData)
 
-#Create new file to store JSON data
+# You need to create a list of nodes
 with open("nodeList.json", "w") as writeFile:
-	json.dump(Router1.__dict__, writeFile)
-# 	for items in dataList:
-# 		json.dump(items.__dict__, writeFile)
+	for items in dataList:
+		data = json.dumps(items.__dict__)
+		writeFile.write(data)
+		writeFile.write("\n")
+
+nodeList = []
+
+with open("nodeList.json", "r") as readFile:
+	for line in readFile:
+		nodeList.append(Node(**json.loads(line)))
+
+for item in nodeList:
+	print (item)
+
+# How to scan for specific router and relay it's connections
+for item in nodeList:
+	if item.name == "Router_1":
+		print (item.checkConnections())
