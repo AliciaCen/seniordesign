@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <link rel="stylesheet" href="style.css">
+    <script src="js/lib/jquery/jquery-3.4.1.js"></script>
+    <!--The script below is for importing the menu to each page-->
+    <script src="js/lib/ddmenu/ddmenu.js" type="text/javascript"></script>
+    <title>ProtoNet</title>
+</head>
+<body id="body">
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <a id="ddmenuLink" href="menu.html" data-toggle="collapse" aria-expanded="true">Menu</a>
+        <div>
+            <div>
+                <img id="logo" src="ProtoNet_logo.png" alt="ProtoNet Logo">
+                <h1 id="title">Security Information</h1>
+            </div>
+            <p>This is a placeholder until we determine the specific security aspects of our algorithm are determined. </p>
+            <p>Our current idea is that variations of a star network configuration will be most secure. We can show images of example configurations
+            to display their differences and provide explanations. </p>
+            <br><br><br><br>
+
+            <center>
+            <img src="Secure2Servers.png" alt="Secure 2-Server Configuration" align="middle">
+            <br><br>
+            <p>
+                This is an example of a secure configuration.
+            </p>
+            <br><br><br><br>
+            <img src="SecureExtendedStar.png" alt="Secure Extended Star Configuration" align="middle">
+            <br><br>
+            <p>
+                This is a second example of a secure configuration. 
+            </p>
+            </center>
+
+            <br><br><br><br>
+
+            
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="./renderer.js"></script>
+<script src="js/index.js"></script>
