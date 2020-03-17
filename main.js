@@ -72,3 +72,25 @@ pyshell1.end(function (err,code,signal) {
   console.log('The exit signal was: ' + signal);
   console.log('finished');
 });
+
+// setup for file system data streaming
+var fs = require('fs');
+var stream;
+// data.txt is the file that will be storing the python script outputs for the time being. 
+stream = fs.createWriteStream("./data.txt");
+
+let pyshell2 = new PythonShell('string_test.py');
+
+pyshell2.send('This is the string that will be processed by the script.');
+
+pyshell2.on('message', function (m) {
+  console.log(m);
+  stream.write(m);
+});
+
+pyshell2.end(function (err,code,signal) {
+  if (err) throw err;
+  console.log('The exit code was: ' + code);
+  console.log('The exit signal was: ' + signal);
+  console.log('finished');
+});
