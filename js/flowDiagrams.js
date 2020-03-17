@@ -1,11 +1,8 @@
 // Known Bugs:
-// - Changing modes doesn't end the previous mode's functionality
 // - Prevent dragging the screen
 
 // TODO:
 // - Allow for easy node image changing
-// - Make "Remove Connections"
-// 		- Allow for edge hovering
 // - Make graph-container change size to match window
 // - Make toolbox better
 // - Make script imports smaller
@@ -30,7 +27,8 @@ s = new sigma({
 		autoRescale: false,
 		doubleClickEnabled: false,
 		minEdgeSize: 0.5,
-		maxEdgeSize: 4
+		maxEdgeSize: 4,
+		enableEdgeHovering: true
 	}
 });
 dom = document.querySelector('#graph-container canvas:last-child');
@@ -98,6 +96,43 @@ connectionStart = function (e) {
 	s.bind('clickNode', connectionComplete);
 }
 
+removeEdge = function(e){
+	console.log("Removing edge between nodes " + e.data.edge.source + " and " + e.data.edge.target);
+	s.graph.dropEdge(e.data.edge.id);
+	s.refresh()
+}
+
+// Mode leaving functions
+
+function endAdd(add) {
+	add.checked = false;
+	dom.removeEventListener('click', addNode);
+}
+
+function endRemove(remove) {
+	remove.checked = false;
+	s.unbind('clickNode', removeNode);
+}
+
+function endConnect(connect) {
+	connect.checked = false;
+	try {
+		s.unbind('clickNode', connectionStart);
+		s.unbind('clickNode', connectionComplete);
+	}
+	catch (err) { }
+}
+
+function endDisconnect(disconnect) {
+	disconnect.checked = false;
+	s.unbind('clickEdge', removeEdge);
+}
+
+function endMove(move) {
+	move.checked = false;
+	sigma.plugins.killDragNodes(s);
+}
+
 
 // Mode listeners
 
@@ -106,54 +141,101 @@ setInterval(function() {
 	if ($('#toolbox').length) {
 		clearInterval(onToolboxLoad);
 		
+		// Get inputs
+		add = document.getElementById('add');
+		remove = document.getElementById('remove');
+		connect = document.getElementById('connect');
+		disconnect = document.getElementById('disconnect');
+		move = document.getElementById('move');
+
 		// Add Mode
-		document.getElementById('add').onclick = function() {
-			if (currentMode != 1) {
-				currentMode = 1;
+		add.onclick = function() {
+			if (this.checked) {
+				// Turn off all other modes
+				endRemove(remove);
+				endConnect(connect);
+				endDisconnect(disconnect);
+				endMove(move);
+
+				// Turn on add mode
 				dom.addEventListener('click', addNode);
-				
+
 			} else {
-				currentMode = 0;
-				dom.removeEventListener('click', addNode);
+				// Turn off add mode
+				endAdd(add);
 			}
 		};
 
 		// Remove Mode
-		document.getElementById('remove').onclick = function() {
-			if (currentMode != 2) {
-				currentMode = 2;
+		remove.onclick = function() {
+			if (this.checked) {
+				// Turn off all other modes
+				endAdd(add);
+				endConnect(connect);
+				endDisconnect(disconnect);
+				endMove(move);
+
+				// Turn on remove mode
 				s.bind('clickNode', removeNode);
+
 			} else {
-				currentMode = 0;
-				s.unbind('clickNode', removeNode);
+				// Turn off remove mode
+				endRemove(remove);
 			}
 		};
 
 		// Connect Mode
-		document.getElementById('connect').onclick = function() {
-			if (currentMode != 3) {
-				currentMode = 3;
+		connect.onclick = function() {
+			if (this.checked) {
+				// Turn off all other modes
+				endAdd(add);
+				endRemove(remove);
+				endDisconnect(disconnect);
+				endMove(move);
+
+				// Turn on connect mode
 				s.bind('clickNode', connectionStart);
+
 			} else {
-				currentMode = 0;
-				s.unbind('clickNode', connectionStart);
-				s.unbind('clickNode', connectionComplete);
+				// Turn off connect mode
+				endConnect(connect);
+			}
+		};
+
+		// Disconnect Mode
+		disconnect.onclick = function() {
+			if (this.checked) {
+				// Turn off all other modes
+				endAdd(add);
+				endRemove(remove);
+				endConnect(connect);
+				endMove(move);
+
+				// Turn on disconnect mode
+				s.bind('clickEdge', removeEdge);
+
+			} else {
+				// Turn off disconnect mode
+				endDisconnect(disconnect);
 			}
 		};
 
 		// Move Mode
-		document.getElementById('move').onclick = function() {
-			if (currentMode != 4) {
-				currentMode = 4;
-				console.log("Creating dragListener")
+		move.onclick = function() {
+			if (this.checked) {
+				// Turn off all other modes
+				endAdd(add);
+				endRemove(remove);
+				endConnect(connect);
+				endDisconnect(disconnect);
+
+				// Turn on move mode
 				dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-				
+
 			} else {
-				currentMode = 0;
-				console.log("Removing dragListener")
-				sigma.plugins.killDragNodes(s);
+				// Turn off move mode
+				endMove(move);
 			}
 		};
-
 	}
 }, 100); // Check every 100ms
