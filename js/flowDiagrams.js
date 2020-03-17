@@ -108,7 +108,6 @@ setInterval(function() {
 		
 		// Add Mode
 		document.getElementById('add').onclick = function() {
-
 			if (currentMode != 1) {
 				currentMode = 1;
 				dom.addEventListener('click', addNode);

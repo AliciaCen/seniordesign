@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "bootstrap-toggle": "^2.2.2",
     "python-shell": "^1.0.8"
   }
 }
