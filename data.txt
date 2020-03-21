@@ -1,1 +1,0 @@
-['This is the string that will be processed by the script.\n']

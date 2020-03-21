@@ -55,42 +55,34 @@ app.on('activate', function () {
 // DOCUMENTATION:
 // https://www.npmjs.com/package/python-shell
 
-let {PythonShell} = require('python-shell')
+// this function allows for the excecution of a python script with a string message
+function excecutePyshell(message, script){
+  let {PythonShell} = require('python-shell')
 
+  let pyshell = new PythonShell(script);
+  
+  pyshell.send(message);
+  
+  pyshell.on('message', function (m) {
+    console.log(m);
+  }); 
 
-let pyshell1 = new PythonShell('nodes.py');
+  pyshell.end(function (err,code,signal) {
+    if (err) throw err;
+    console.log('The exit code was: ' + code);
+    console.log('The exit signal was: ' + signal);
+    console.log('finished');
+  });
+}
 
-pyshell1.send('hello');
-
-pyshell1.on('message', function (m) {
-  console.log(m);
-});
-
-pyshell1.end(function (err,code,signal) {
-  if (err) throw err;
-  console.log('The exit code was: ' + code);
-  console.log('The exit signal was: ' + signal);
-  console.log('finished');
-});
+excecutePyshell('', 'nodes.py')
+// when modifying a node, a function, node name, number of ports, bitrate, wireless capability and optional connections are needed.
+excecutePyshell('Add:Router_6:4:1600:false:null', 'modifyNodes.py')
+excecutePyshell('Delete:Router_6:4:1600:false:null', 'modifyNodes.py')
+excecutePyshell('Modify:Router_6:4:1600:false:null', 'modifyNodes.py')
 
 // setup for file system data streaming
-var fs = require('fs');
-var stream;
+//var fs = require('fs');
+//var stream;
 // data.txt is the file that will be storing the python script outputs for the time being. 
-stream = fs.createWriteStream("./data.txt");
-
-let pyshell2 = new PythonShell('string_test.py');
-
-pyshell2.send('This is the string that will be processed by the script.');
-
-pyshell2.on('message', function (m) {
-  console.log(m);
-  stream.write(m);
-});
-
-pyshell2.end(function (err,code,signal) {
-  if (err) throw err;
-  console.log('The exit code was: ' + code);
-  console.log('The exit signal was: ' + signal);
-  console.log('finished');
-});
+//stream = fs.createWriteStream("./data.txt");
