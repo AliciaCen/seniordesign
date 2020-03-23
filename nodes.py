@@ -15,15 +15,20 @@ dataList = []
 # Basic class structure. Port and Rate are intended to be integers
 # Wireless is a boolean set to 0 or 1 and Connections is a list
 class Node:
-	def __init__(self, name, ports = 1, bitRate = 0, wireless = 0, connections = None):
+	# Nodes must be created with name, type, ports, and bit rate
+	def __init__(self, name, nodeType = "router", ports = 1, bitRate = 0, wireless = 0, xValue = 0, yValue = 0, connections = None):
 		self.name = name
+		self.nodeType = nodeType
 		self.ports = ports
 		self.bitRate = bitRate
 		self.wireless = wireless
+		self.xValue = xValue
+		self.yValue = yValue
 		self.connections = connections if connections is not None else []
 
+	# Returns the node with name, type, ports, and bit rate
 	def __str__(self):
-		return "I am {}, a router with {} ports, a data rate of {}".format(self.name, self.ports, self.bitRate)
+		return ("I am {}, a {} with {} ports, and a data rate of {}".format(self.name, self.nodeType, self.ports, self.bitRate))
 
 	# Connect node to existing node
 	# Checks if nodes are already connected
@@ -53,11 +58,11 @@ class Node:
 		return cls(data)
 
 # Create 5 basic router nodes
-Router1 = Node('Router_1', 4, 2400, 0)
-Router2 = Node('Router_2', 5, 3000, 0)
-Router3 = Node('Router_3', 6, 3600, 0)
-Router4 = Node('Router_4', 7, 4200, 0)
-Router5 = Node('Router_5', 8, 4800, 0)
+Router1 = Node('Router_1', "router", 4, 2400, 0)
+Router2 = Node('Router_2', "router", 5, 3000, 0)
+Router3 = Node('Router_3', "router", 6, 3600, 0)
+Router4 = Node('Router_4', "router", 7, 4200, 0)
+Router5 = Node('Router_5', "router", 8, 4800, 0)
 
 # List of all nodes
 dataList.append(Router1)
