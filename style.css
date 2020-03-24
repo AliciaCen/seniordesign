@@ -89,15 +89,15 @@ th {
 	display: inline-block;
 	width: 50px;
 	height: 24px;
-  }
-  
-  .switch input { 
+}
+
+.switch input { 
 	opacity: 0;
 	width: 0;
 	height: 0;
-  }
-  
-  .slider {
+}
+
+.slider {
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -107,9 +107,9 @@ th {
 	background-color: #ccc;
 	-webkit-transition: .4s;
 	transition: .4s;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
 	position: absolute;
 	content: "";
 	height: 16px;
@@ -119,47 +119,51 @@ th {
 	background-color: white;
 	-webkit-transition: .4s;
 	transition: .4s;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked + .slider {
 	background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus + .slider {
 	box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked + .slider:before {
 	-webkit-transform: translateX(26px);
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
+}
+
+#renameBox {
+	visibility: hidden;
+}
+
+/* Rounded sliders */
+.slider.round {
 	border-radius: 20px;
-  }
-  
-  .slider.round:before {
+}
+
+.slider.round:before {
 	border-radius: 50%;
-  }
+}
 
   /* Modal Header */
 .modal-header {
 	padding: 2px 16px;
 	background-color: #7386D5;
 	color: white;
-  }
+}
   
   /* Modal Body */
-  .modal-body {padding: 2px 16px;}
+.modal-body {padding: 2px 16px;}
   
   /* Modal Footer */
-  .modal-footer {
+.modal-footer {
 	padding: 2px 16px;
 	background-color: #7386D5;
 	color: white;
-  }
+}
   
   /* Modal Content */
 .modal-content {
@@ -172,10 +176,10 @@ th {
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 	animation-name: animatetop;
 	animation-duration: 0.4s
-  }
+}
   
   /* Add Animation */
-  @keyframes animatetop {
+@keyframes animatetop {
 	from {top: -300px; opacity: 0}
 	to {top: 0; opacity: 1}
-  }
+}

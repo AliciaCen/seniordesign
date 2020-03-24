@@ -12,7 +12,6 @@ var s,
 		nodes: [],
 		edges: []
 	},
-	currentMode = 0, 	// 0:normal,1:add,2:Remove,3:Connect,4:Drag
 	n = 0;
 
 
@@ -34,6 +33,33 @@ s = new sigma({
 dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
+
+rename = function (e) {
+	updateNode = function() {
+		s.graph.nodes(nodeID).label = box.value;
+		s.refresh();
+	}
+
+	nodeID = e.data.node.id;
+	nodeName = e.data.node.label;
+	
+	console.log(nodeName, nodeID)
+
+	box = document.getElementById("renameBox");
+	box.value = nodeName;
+	box.style.visibility = "visible";
+	box.focus();
+	box.select();
+	box.addEventListener('input', updateNode);
+
+	document.addEventListener('click', function(e) {
+		box.value = "";
+		box.style.visibility = "hidden";
+		box.removeEventListener('input', updateNode);
+	}, {once: true});
+}
+
+s.bind('doubleClickNode', rename);
 
 // Helper Functions
 addNode = function (e) {
