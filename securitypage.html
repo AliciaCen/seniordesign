@@ -20,28 +20,73 @@
                 <img id="logo" src="ProtoNet_logo.png" alt="ProtoNet Logo">
                 <h1 id="title">Security Information</h1>
             </div>
-            <p>This is a placeholder until we determine the specific security aspects of our algorithm are determined. </p>
-            <p>Our current idea is that variations of a star network configuration will be most secure. We can show images of example configurations
-            to display their differences and provide explanations. </p>
-            <br><br><br><br>
+            <hr>
+            <blockquote>
+                <p>In the field of cyber technology, there are many branches of security. ProtoNet focuses on network design and the security aspects surrounding this area. </p>
+                <p>
+                    How a network is designed plays a large role in its overall security posture. A poorly designed network will result in a rapid spread of malware,
+                    which will jeopardize any affected machines and potentially the entire network.
+                </p>
+                <p>
+                    In an effort to ensure that ProtoNet is used effectively, we have outlined below how ProtoNet determines the most secure network layout and how
+                    this differs from an efficient one.
+                </p>
+            </blockquote>
+            <hr>
+            <br><br>
 
+            <p>
+                In ProtoNet, a network with <i>efficiency</i> selected will prioritize data rate transfer across the network. This typically results in a network
+                where nodes have many connections between them, while still being readable.
+            </p>
+            <p>
+                Within the scope of ProtoNet, a <i>secure</i> network is defined as a network that has a layout that will reduce the impact of malware attempting to spread
+                across it. There are many different ways to configure a network to do this, but they will all attempt to adhere to the following guidelines:
+            </p>
+        </div>
+        <ul type="disc">
+            <li><b>Minimize the number of connections between nodes.</b> This reduces the number of nodes that malware could quickly infect. </li>
+            <li>
+                <b>Avoid connecting individual nodes to multiple servers.</b> In the event of an infection, this would help prevent spreading malware to these servers.
+                This would keep the data on these devices safe, as well as prevent the spread of malware to all other nodes directly connected to those servers.
+            </li>
+        </ul>
+        <br>
+        <p>
+            The overall aim is to create distance between individual nodes and centralized nodes. Following these guidelines often results in generating network
+            configurations that are variations of the star or mesh topologies. This will be dependent upon the number of servers the network has. Below are some example network
+            designs that ProtoNet may generate.
+        </p>
+        <br><br><br><br>
+        <div>
             <center>
-            <img src="Secure2Servers.png" alt="Secure 2-Server Configuration" align="middle">
-            <br><br>
-            <p>
-                This is an example of a secure configuration.
-            </p>
-            <br><br><br><br>
-            <img src="SecureExtendedStar.png" alt="Secure Extended Star Configuration" align="middle">
-            <br><br>
-            <p>
-                This is a second example of a secure configuration. 
-            </p>
+                <img src="SecureExtendedStar.png" alt="Secure 2-Server Configuration">
+                <br><br>
+                <p>
+                    This is an example of a secure configuration with one server. It is a variation of a star topology where each node connected to the server has additional
+                    connections to additional nodes. This minimizes the number of nodes that are directly connected to the server and provides distance between many of the
+                    network's nodes and the central server.
+                </p>
+                <p>
+                    If a randomly selected node is infected with malware or ransomeware, this configuration would help prevent the
+                    infection from quickly propagating across the rest of the network. This delay gives the network professional an opportunity to detect and address the
+                    infection, minimizing any potential damage.
+                </p>
+                <br><br><br><br>
+                <img src="Secure2Servers.png" alt="Secure Extended Star Configuration">
+                <br><br>
+                <p>
+                    This configuration is similar to the previous one, except there is an additional server included. However, each centralized node needs special consideration
+                    when designing a secure network layout. This is because any malware that reaches a centralized node will be able to very quickly spread across the entire
+                    network. For this reason, the servers are not directly connected to each other, so that if one is compromised, additional servers are not
+                    immediately compromised as well.
+                </p>
+                <p>This layout still has a low average node-to-server distance, while utilizing the additional resources that the second server provides. </p>
+
+
+                <br><br><br><br>
+
             </center>
-
-            <br><br><br><br>
-
-            
         </div>
     </div>
 </body>
