@@ -4,18 +4,8 @@ var onToolboxLoad = setInterval(function() {
 		clearInterval(onToolboxLoad);
 		dragElement(document.getElementById("toolbox")); // Begin watching for clicking
 
-		$("#hideButton").click(function(){ // Initialize hide button
-			$("#toolbox").toggle("show")
-		})
-
-		// TEMP FOR DEMO
-		$("#fastConfig").click(function(){ 
-			$(fastConfigData).show()
-			$(secureConfigData).hide()
-		})
-		$("#secureConfig").click(function(){ 
-			$(fastConfigData).hide()
-			$(secureConfigData).show()
+		$("#modal").click(function(){ 
+			console.log("I show the modal!");
 		})
 
 	}
