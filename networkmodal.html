@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<link rel="stylesheet" href="style.css">
+		<meta charset="UTF-8">
+	</head>
+	<body>
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5>Type of Node</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <p>Please define the type of node you are adding:</p>
+                <br>
+                <p>Pre-defined options:</p>
+                <select class="form-control">
+                    <option>Router</option>
+                    <option>Server</option>
+                    <option>Firewall</option>
+                </select>
+                <p>Enter your own name: </p>
+                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="router, server, etc.">
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
