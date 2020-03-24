@@ -15,15 +15,20 @@ dataList = []
 # Basic class structure. Port and Rate are intended to be integers
 # Wireless is a boolean set to 0 or 1 and Connections is a list
 class Node:
-	def __init__(self, name, ports = 1, bitRate = 0, wireless = 0, connections = None):
+	# Nodes must be created with name, type, ports, and bit rate
+	def __init__(self, name, ports = 1, bitRate = 0, wireless = 0, nodeType = "router", xValue = 0, yValue = 0, connections = None):
 		self.name = name
 		self.ports = ports
 		self.bitRate = bitRate
 		self.wireless = wireless
+		self.nodeType = nodeType
+		self.xValue = xValue
+		self.yValue = yValue
 		self.connections = connections if connections is not None else []
 
+	# Returns the node with name, type, ports, and bit rate
 	def __str__(self):
-		return "I am {}, a router with {} ports, a data rate of {}".format(self.name, self.ports, self.bitRate)
+		return ("I am {}, a {} with {} ports, and a data rate of {}".format(self.name, self.nodeType, self.ports, self.bitRate))
 
 	# Connect node to existing node
 	# Checks if nodes are already connected
