@@ -75,14 +75,15 @@ function excecutePyshell(message, script){
   });
 }
 
+// initial script that runs and creates the nodeList.json file with 5 sample nodes
 excecutePyshell('', 'nodes.py')
-// when modifying a node, a function, node name, number of ports, bitrate, wireless capability and optional connections are needed.
-excecutePyshell('Add:Router_6:4:1600:false:null', 'modifyNodes.py')
-excecutePyshell('Delete:Router_6:4:1600:false:null', 'modifyNodes.py')
-excecutePyshell('Modify:Router_6:4:1600:false:null', 'modifyNodes.py')
 
-// setup for file system data streaming
-//var fs = require('fs');
-//var stream;
-// data.txt is the file that will be storing the python script outputs for the time being. 
-//stream = fs.createWriteStream("./data.txt");
+// when adding a router, specify that you want to add and provide a name, number of ports, bitrate, and wireless capability (0 or 1). 
+//excecutePyshell('Add:Router_6:4:1600:0', 'modifyNodes.py')  
+
+// when deleteing a node, specify that you want to delete and you only need to provide the node name.
+//excecutePyshell('Delete:Router_4:', 'modifyNodes.py')
+
+// when modifying connections, you need to specify what two routers you want to establish or teardown connections with
+//excecutePyshell('AddConnection:Router_5:Router_2', 'modifyNodes.py')
+//excecutePyshell('DeleteConnection:Router_4:Router_1', 'modifyNodes.py')
