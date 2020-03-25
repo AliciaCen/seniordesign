@@ -1,3 +1,5 @@
+var $ = require('jQuery');
+
 $(function(){
 	$("#toolboxContainer").load("toolbox.html");
 });

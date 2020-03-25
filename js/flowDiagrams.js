@@ -1,11 +1,14 @@
-// Known Bugs:
-// - Prevent dragging the screen
 
 // TODO:
 // - Allow for easy node image changing
 // - Make graph-container change size to match window
 // - Make toolbox better
-// - Make script imports smaller
+
+// NPM Module Imports
+var sigma = require('sigma');
+require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js')
+var $ = require('jQuery');
+
 
 var s,
 	g = {
@@ -13,7 +16,6 @@ var s,
 		edges: []
 	},
 	n = 0;
-
 
 // Instantiate sigma:
 s = new sigma({

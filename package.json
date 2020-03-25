@@ -17,11 +17,13 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^7.1.11"
+    "electron": "^7.2.1"
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
     "bootstrap-toggle": "^2.2.2",
-    "python-shell": "^1.0.8"
+    "jquery": "^3.4.1",
+    "python-shell": "^1.0.8",
+    "sigma": "^1.2.1"
   }
 }
