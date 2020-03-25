@@ -7,7 +7,17 @@
 // NPM Module Imports
 var sigma = require('sigma');
 require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js')
-var $ = require('jQuery');
+var $ = require('jquery');
+
+// Custom Class Import
+var Node = require("./js/Node.js")
+var testObj = require("./js/test.js")
+
+var n = new Node("test")
+
+console.log(testObj.test(n).toString())
+console.log(testObj.test2())
+
 
 
 var s,
