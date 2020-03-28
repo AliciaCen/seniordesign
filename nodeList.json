@@ -1,5 +1,1 @@
-{"name": "Router_1", "ports": 4, "bitRate": 2400, "wireless": 0, "connections": ["Router_3", "Router_4"]}
-{"name": "Router_2", "ports": 5, "bitRate": 3000, "wireless": 0, "connections": ["Router_4"]}
-{"name": "Router_3", "ports": 6, "bitRate": 3600, "wireless": 0, "connections": ["Router_1"]}
-{"name": "Router_4", "ports": 7, "bitRate": 4200, "wireless": 0, "connections": ["Router_1", "Router_2"]}
-{"name": "Router_5", "ports": 8, "bitRate": 4800, "wireless": 0, "connections": []}
+[]

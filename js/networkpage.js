@@ -1,4 +1,4 @@
-var $ = require('jQuery');
+var $ = require('jquery');
 
 $(function(){
 	$("#toolboxContainer").load("toolbox.html");

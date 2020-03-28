@@ -11,12 +11,35 @@ var $ = require('jquery');
 
 // Custom Class Import
 var Node = require("./js/Node.js")
-var testObj = require("./js/test.js")
+var nodeModification = require("./js/modifyNodes.js")
 
-var n = new Node("test")
+// format of hardware database
+// Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
+// wireless capability, price
 
-console.log(testObj.test(n).toString())
-console.log(testObj.test2())
+// load in the hardware database
+'use strict';
+const fs = require('fs');
+
+let rawdata = fs.readFileSync('./hardware_database.json');
+let hardware = JSON.parse(rawdata);
+
+// add two nodes from the first two objects in the database
+//nodeModification.addNode("Router_1", hardware[0]);
+//nodeModification.addNode("Router_2", hardware[1]);
+//nodeModification.addNode("Router_3", hardware[1]);
+
+// delete a node by name
+//nodeModification.deleteNode("Router_1");
+//nodeModification.deleteNode("Router_2");
+//nodeModification.deleteNode("Router_3");
+
+// make a connection between two nodes by providing two names
+//nodeModification.createConnection("Router_1", "Router_2");
+//nodeModification.createConnection("Router_1", "Router_3");
+
+// delete a connection between two nodes by providing two names
+//nodeModification.deleteConnection("Router_1", "Router_2");
 
 
 

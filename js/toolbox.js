@@ -1,4 +1,4 @@
-var $ = require('jQuery');
+var $ = require('jquery');
 
 // Wait until the Toolbox is loaded
 var onToolboxLoad = setInterval(function() {

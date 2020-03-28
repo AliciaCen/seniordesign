@@ -1,0 +1,30 @@
+[
+    {
+    "brand": "Netgear", 
+    "model": "AC2100", 
+    "quality": "High", 
+    "nodeType": "Router", 
+    "WANports": 1, 
+    "LANports": 4, 
+    "ethbitRate": 1000, 
+    "lobitRate": 800, 
+    "hibitRate": 1300, 
+    "wireless": 1, 
+    "price": 77.98
+} 
+, 
+    {
+    "brand": "Netgear", 
+    "model": "AC750", 
+    "quality": "Low", 
+    "nodeType": "Router", 
+    "WANports": 1, 
+    "LANports": 4, 
+    "ethbitRate": 100, 
+    "lobitRate": 300, 
+    "hibitRate": 433, 
+    "wireless": 1, 
+    "price": 39.99
+    }
+]
+    
