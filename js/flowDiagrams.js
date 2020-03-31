@@ -72,17 +72,13 @@ addNode = function (e) {
 	newx = p.x;
 	newy = p.y;
 
-	console.log("Creating node n" + n);
-
-	s.graph.addNode({
-		id: (id = 'n' + n),
-		label: 'Node ' + n++,
-		size: 10,
-		x: newx,
-		y: newy,
-		color: '#666'
-	});
-	s.refresh()
+	$("#modalcontainer").show();
+	document.getElementById("save").onclick = naming
+	document.getElementById("cancel").onclick = 
+		function () {
+			$("#modalcontainer").hide()
+			$("#nodelabel").val("")
+		}
 }
 
 removeNode = function (e) {
@@ -126,6 +122,23 @@ removeEdge = function(e){
 	console.log("Removing edge between nodes " + e.data.edge.source + " and " + e.data.edge.target);
 	s.graph.dropEdge(e.data.edge.id);
 	s.refresh()
+}
+
+function naming(){
+	dom.removeEventListener("click", naming)
+	name = $("#nodelabel").val() 
+	console.log("Creating node " + name);
+	s.graph.addNode({
+		id: (id = name),
+		label: name,
+		size: 10,
+		x: newx,
+		y: newy,
+		color: '#666'
+	});
+	s.refresh()
+	$("#modalcontainer").hide();
+	$("#nodelabel").val("")
 }
 
 // Mode leaving functions
