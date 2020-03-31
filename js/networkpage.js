@@ -4,3 +4,6 @@ $(function(){
 $(function(){
 	$("#modalcontainer").load("networkmodal.html").hide();
 });
+$(function(){
+	$("#introModal").load("intromodal.html");
+});

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Getting Started</h2>
+        </div>
+        <div class="modal-body">
+            <p>To get started, enter some initial information about the network you want to configure.</p>
+            <p>Leave the number of nodes as zero if you would like to start from scratch.</p>
+            <br />
+            <p>Number of nodes:</p>
+            <input type="number" id="nodeNumber" value="0" min="0" max="30">
+            <br /><br />
+            <p>Preference:</p>
+            <div>
+                <input type="radio" id="prefsecure" name="option" value="Secure" checked>
+                <label for="prefsecure">Secure (Recommended)</label>
+            </div>
+            <div>
+                <input type="radio" id="prefefficient" name="option" value="Efficient">
+                <label for="prefefficient">Efficient</label>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="start" class="btn btn-primary">Start Configuration</button>
+            <button type="button" id="closeIntro" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+</body>
+</html>
