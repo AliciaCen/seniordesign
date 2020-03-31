@@ -47,14 +47,14 @@ th {
 	text-align: left;
 }
 
-#toolbox {
+#toolboxContainer {
 	position: absolute;
 	z-index: 999;
 	background-color: #f1f1f1;
 	border: 1px solid #d3d3d3;
 }
 
-#toolboxContent {
+#toolbox {
 	padding: 10px;
 	float:left;
 	width:850px;
@@ -170,7 +170,7 @@ input:checked + .slider:before {
 	position: absolute;
 	top: 20%;
 	left: 24%;
-	background-color:#fefefe;
+	background-color: #fefefe;
 	margin: auto;
 	padding: 0;
 	border: 1px solid #888;

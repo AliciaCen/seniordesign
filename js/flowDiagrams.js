@@ -11,6 +11,7 @@
 var sigma = require('sigma');
 require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js')
 var $ = require('jquery');
+const fs = require('fs');
 
 // Custom class import
 var Node = require("./js/Node.js")
@@ -21,29 +22,26 @@ var nodeModification = require("./js/modifyNodes.js")
 // wireless capability, price
 
 // load in the hardware database
-'use strict';
-const fs = require('fs');
-
 let rawdata = fs.readFileSync('./hardware_database.json');
 let hardware = JSON.parse(rawdata);
 
 // add two nodes from the first two objects in the database
-//nodeModification.addNode("Router_1", hardware[0]);
-//nodeModification.addNode("Router_2", hardware[1]);
-//nodeModification.addNode("Router_3", hardware[1]);
+// nodeModification.addNode("Router_1", hardware[0]);
+// nodeModification.addNode("Router_2", hardware[1]);
+// nodeModification.addNode("Router_3", hardware[1]);
 
 // delete a node by name
-//nodeModification.deleteNode("Router_1");
-//nodeModification.deleteNode("Router_2");
-//nodeModification.deleteNode("Router_3");
+// nodeModification.deleteNode("Router_1");
+// nodeModification.deleteNode("Router_2");
+// nodeModification.deleteNode("Router_3");
 
 // make a connection between two nodes by providing two names 
 // error codes: 0 - successful, 1 - one of the routers is invalid, 2 - this connection already exists
-//status = nodeModification.createConnection("Router_1", "Router_2");
-//status = nodeModification.createConnection("Router_1", "Router_3");
+// status = nodeModification.createConnection("Router_1", "Router_2");
+// status = nodeModification.createConnection("Router_1", "Router_3");
 
 // delete a connection between two nodes by providing two names
-//nodeModification.deleteConnection("Router_1", "Router_2");
+// nodeModification.deleteConnection("Router_1", "Router_2");
 
 var s,
 	g = {
@@ -111,6 +109,8 @@ addNode = function (e) {
 	newy = p.y;
 
 	$("#modalcontainer").show();
+	document.getElementById("nodelabel").focus()
+
 	document.getElementById("save").onclick = naming
 	document.getElementById("cancel").onclick = 
 		function () {
@@ -120,7 +120,14 @@ addNode = function (e) {
 }
 
 removeNode = function (e) {
-	console.log("Removing node " + e.data.node.id)
+	nodeName = e.data.node.id
+	console.log("Removing node " + nodeName)
+
+	// TODO:
+	// Make a "Clear all" function
+
+	nodeModification.deleteNode(nodeName);
+
 	s.graph.dropNode(e.data.node.id);
 	s.refresh();
 }
@@ -132,22 +139,29 @@ connectionStart = function (e) {
 
 		var src = toConnect
 		var tgt = e.data.node.id
+
+		// TODO
+		// None (for now)
+
+		result = nodeModification.createConnection(src, tgt);
 		
-		s.graph.addEdge({
-			id: 'e' + src + "-" + tgt,
-			source: src,
-			target: tgt,
-			size: 3,
-			type: 'line',
-			color: '#ccc',
-			hover_color: '#000'
-		});
-		s.refresh();
-		
-		console.log("Connection from node " + src + " to " + tgt + " created.");
-		
-		s.unbind('clickNode', connectionComplete);
-		s.bind('clickNode', connectionStart);
+		if (result == 0) {
+			s.graph.addEdge({
+				id: 'e' + src + "-" + tgt,
+				source: src,
+				target: tgt,
+				size: 3,
+				type: 'line',
+				color: '#ccc',
+				hover_color: '#000'
+			});
+			s.refresh();
+			
+			console.log("Connection from node " + src + " to " + tgt + " created.");
+			
+			s.unbind('clickNode', connectionComplete);
+			s.bind('clickNode', connectionStart);
+		}
 	}
 
 	console.log("Initializing connection from node " + toConnect);
@@ -157,15 +171,32 @@ connectionStart = function (e) {
 }
 
 removeEdge = function(e){
-	console.log("Removing edge between nodes " + e.data.edge.source + " and " + e.data.edge.target);
+	src = e.data.edge.source;
+	tgt = e.data.edge.target;
+
+	console.log("Removing edge between nodes " + src + " and " + tgt);
+
+	// TODO:
+	// None (For now)
+
+	nodeModification.deleteConnection(src, tgt);
 	s.graph.dropEdge(e.data.edge.id);
 	s.refresh()
 }
 
 function naming(){
 	dom.removeEventListener("click", naming)
+	
 	name = $("#nodelabel").val() 
+
+	// TODO:
+	// - Define Chosen Hardware
+	// - Function accepts Coordinate System
+
+	nodeModification.addNode(name, hardware[1]);
+
 	console.log("Creating node " + name);
+
 	s.graph.addNode({
 		id: (id = name),
 		label: name,
