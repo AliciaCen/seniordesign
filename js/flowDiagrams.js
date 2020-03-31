@@ -7,6 +7,11 @@
 // - Make toolbox better
 // - Make script imports smaller
 
+// NPM Module Imports
+var sigma = require('sigma');
+require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js')
+var $ = require('jquery');
+
 // Custom class import
 var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
