@@ -11,7 +11,7 @@
     "hibitRate": 1300, 
     "wireless": 1, 
     "price": 77.98
-} 
+    } 
 , 
     {
     "brand": "Netgear", 
@@ -25,6 +25,104 @@
     "hibitRate": 433, 
     "wireless": 1, 
     "price": 39.99
+    }
+,
+    {
+    "brand": "Netgear", 
+    "model": "AC1000", 
+    "quality": "Medium", 
+    "nodeType": "Router", 
+    "WANports": 1, 
+    "LANports": 4, 
+    "ethbitRate": 100, 
+    "lobitRate": 300, 
+    "hibitRate": 700, 
+    "wireless": 1, 
+    "price": 59.99
+    }
+,
+    {
+    "brand": "Netgear", 
+    "model": "GS108", 
+    "quality": "Low", 
+    "nodeType": "Switch", 
+    "WANports": 0, 
+    "LANports": 8, 
+    "ethbitRate": 1000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 49.99
+    }
+,
+    {
+    "brand": "Netgear", 
+    "model": "GS116", 
+    "quality": "Medium", 
+    "nodeType": "Switch", 
+    "WANports": 0, 
+    "LANports": 16, 
+    "ethbitRate": 1000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 89.99
+    }
+,
+    {
+    "brand": "Netgear", 
+    "model": "JGS524", 
+    "quality": "High", 
+    "nodeType": "Switch", 
+    "WANports": 0, 
+    "LANports": 24, 
+    "ethbitRate": 1000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 134.99
+    }
+,
+    {
+    "brand": "StarTech", 
+    "model": "ST4000SPEXI", 
+    "quality": "Low", 
+    "nodeType": "Server", 
+    "WANports": 0, 
+    "LANports": 4, 
+    "ethbitRate": 1000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 253.00
+    }
+,
+    {
+    "brand": "Intel", 
+    "model": "X710DA2", 
+    "quality": "Medium", 
+    "nodeType": "Server", 
+    "WANports": 0, 
+    "LANports": 2, 
+    "ethbitRate": 40000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 315.00
+    }
+,
+    {
+    "brand": "Mellanox", 
+    "model": "MCX515A", 
+    "quality": "High", 
+    "nodeType": "Switch", 
+    "WANports": 0, 
+    "LANports": 1, 
+    "ethbitRate": 1000000, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 770.00
     }
 ]
     
