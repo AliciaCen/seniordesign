@@ -7,23 +7,22 @@
 	<body>
         <div class="modal-content">
             <div class="modal-header">
-              <span class="close">&times;</span>
-              <h2>Name the Node</h2>
+              <h2>Define Nodes</h2>
             </div>
             <div class="modal-body">
-                <p>Please define the type of node you are adding:</p>
-                <p>Pre-defined options:</p>
+                <p>Enter node name: </p>
+                <input type="name" id="nodelabel" placeholder="router, server, etc.">
+                <p>What is this Hardware:</p>
                 <select class="form-control">
                     <option>Router</option>
                     <option>Server</option>
                     <option>Firewall</option>
                 </select>
-                <p>Enter your own name: </p>
-                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="router, server, etc.">
+                <br>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="save" class="btn btn-primary">Save changes</button>
+                <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </body>
