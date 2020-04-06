@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div class="modal-content" id="networkConfig">
+        <div class="modal-header">
+            <h2>Configuration Settings</h2>
+        </div>
+
+        <div class="modal-body">
+            <p>To get started, enter some initial information about the network you want to configure. </p>
+            <p>
+                Enter the total number of nodes in your network, then enter the number of nodes that are servers. Select your network preference, then
+                click "Start Configuration" to generate your network layout.
+            </p>
+            <p>Leave the number of nodes as zero if you would like to start from scratch.</p>
+            <br>
+
+            <form class="form-inline" action="/action_page.php">
+                <label for="nodeNumber">Number of nodes:</label>
+                <input type="number" id="nodeNumber" value="0" min="0" max="30">
+
+                <label for="srvNumber">Number of servers:</label>
+                <input type="number" id="srvNumber" value="0" min="0" max="30">
+            </form>
+            <br>
+            <p>Preference:</p>
+            <div>
+                <input type="radio" id="prefSecure" name="option" value="Secure" checked>
+                <label for="prefSecure">Secure (Recommended)</label>
+            </div>
+            <div>
+                <input type="radio" id="prefEfficient" name="option" value="Efficient">
+                <label for="prefEfficient">Efficient</label>
+            </div>
+            <br>
+
+        </div>
+        <div class="modal-footer">
+            <br>
+            <button type="submit" class="btn" id="startConfigBtn">Start Configuration</button>
+            <button type="button" class="btn cancel" id="closeConfigBtn">Cancel</button>
+            <br><br>
+        </div>
+    </div>
+
+</body>
+</html>

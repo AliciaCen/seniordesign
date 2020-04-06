@@ -183,3 +183,29 @@ input:checked + .slider:before {
 	from {top: -300px; opacity: 0}
 	to {top: 0; opacity: 1}
 }
+
+	/*Configuration Modal*/
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+	background-color: #555;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	position: fixed;
+	bottom: 23px;
+	left: 158px;
+	width: 280px;
+}
+
+
+	/* Add some hover effects to buttons */
+	.open-button:hover {
+		opacity: 1;
+	}
+
+.form-inline label {
+	margin: 5px 5px 5px 20px;
+}
