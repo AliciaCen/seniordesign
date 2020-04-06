@@ -1,5 +1,5 @@
 module.exports = class Node {
-	constructor(name = "", brand = "", model = "", quality = "", nodeType = "router", WANports = 1, LANports = 4, ethbitRate = 0 , lobitRate = 0, 
+	constructor(name = "", brand = "", model = "", quality = "", nodeType = "Router", WANports = 1, LANports = 4, ethbitRate = 0 , lobitRate = 0, 
 	hibitRate = 0, wireless = 0, price = 0, xValue = 0, yValue = 0, connections = []) {
 		this.name = name;
 		this.brand = brand;
