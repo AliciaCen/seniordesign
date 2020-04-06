@@ -2,7 +2,7 @@ var Node = require("./Node.js")
 
 // this function takes in a name of a node and a hardware object then creates a new node and adds it to the current
 // network arcitecture. 
-exports.addNode = function(name, data){
+exports.addNode = function(name, data, x, y){
 	// first checks to see if there is already a node with that name 
 	'use strict';
 	const fs = require('fs');
@@ -24,7 +24,7 @@ exports.addNode = function(name, data){
 
 	// the data provided is a an object with all the information needed to create a new node
 	var newNode = new Node(name, data.brand, data.model, data.quality, data.nodeType, data.WANports,
-		data.LANports, data.ethbitRate, data.lobitRate, data.hibitRate, data.wireless, data.price)
+		data.LANports, data.ethbitRate, data.lobitRate, data.hibitRate, data.wireless, data.price, x, y)
 
 	// create an array to store the nodes from the json file and to append the new addition
 	var nodes = [];
@@ -174,4 +174,14 @@ exports.deleteConnection = function(node1, node2){
 	// update the nodeList.json file with the updated information
 	var newjson = JSON.stringify(hardware);
 	fs.writeFileSync('./nodeList.json', newjson);
+}
+
+exports.clearAll = function() {
+	console.log("Clearing all nodes")
+
+	// Load the file
+	const fs = require('fs')
+
+	// Write empty JSON
+	fs.writeFileSync('./nodeList.json', JSON.stringify([]));
 }

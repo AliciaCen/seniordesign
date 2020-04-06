@@ -193,7 +193,7 @@ function naming(){
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
 
-	nodeModification.addNode(name, hardware[1]);
+	nodeModification.addNode(name, hardware[1], newx, newy);
 
 	console.log("Creating node " + name);
 
@@ -245,10 +245,16 @@ function endMove(move) {
 // Mode listeners
 
 // Wait until the Toolbox is loaded
-setInterval(function() {
+var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
+
+function onToolboxLoad() {
 	if ($('#toolbox').length) {
-		clearInterval(onToolboxLoad);
+		clearInterval(timer);
 		
+		// Begin by clearing the current directory of nodes
+		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
+		nodeModification.clearAll();
+
 		// Get inputs
 		add = document.getElementById('add');
 		remove = document.getElementById('remove');
@@ -346,4 +352,4 @@ setInterval(function() {
 			}
 		};
 	}
-}, 100); // Check every 100ms
+}
