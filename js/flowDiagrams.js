@@ -83,29 +83,14 @@ dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
 
-rename = function (e) {
-	updateNode = function() {
-		s.graph.nodes(nodeID).label = box.value;
-		s.refresh();
-	}
-
-	nodeID = e.data.node.id;
-	nodeName = e.data.node.label;
-	
-	console.log(nodeName, nodeID)
-
-	box = document.getElementById("renameBox");
-	box.value = nodeName;
-	box.style.visibility = "visible";
-	box.focus();
-	box.select();
-	box.addEventListener('input', updateNode);
-
-	document.addEventListener('click', function(e) {
-		box.value = "";
-		box.style.visibility = "hidden";
-		box.removeEventListener('input', updateNode);
-	}, {once: true});
+rename = function () {
+	$("#modalcontainer").show();
+	document.getElementById("save").onclick = renamemodal
+	document.getElementById("cancel").onclick = 
+		function () {
+			$("#modalcontainer").hide()
+			$("#nodelabel").val("")
+		}
 }
 
 s.bind('doubleClickNode', rename);
@@ -223,6 +208,14 @@ function naming(){
 	$("#nodelabel").val("")
 }
 
+function renamemodal() {
+	dom.removeEventListener("click", naming)
+	name = $("#nodelabel").val() 
+	s.graph.nodes(id).label =  name
+	s.refresh()
+	$("#modalcontainer").hide();
+	$("#nodelabel").val("")	
+}
 // Mode leaving functions
 
 function endAdd(add) {
