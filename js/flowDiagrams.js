@@ -51,12 +51,8 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 // run path analysis on network
 //analysis.dijksta();
 
-/* nodeModification.addNode("Router_1", hardware[1]);
-nodeModification.addNode("Router_2", hardware[0]);
-nodeModification.addNode("Router_3", hardware[2]);
-nodeModification.addNode("Router_4", hardware[1]);
-nodeModification.addNode("Server_1", hardware[7]);
-secureAlg.secureConnection();*/
+//nodeModification.addNode("Server_1", hardware[7]);
+//secureAlg.secureConnection();
 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
@@ -270,7 +266,7 @@ function onToolboxLoad() {
 		
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		nodeModification.clearAll();
+		//nodeModification.clearAll();
 
 		// Get inputs
 		add = document.getElementById('add');

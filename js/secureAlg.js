@@ -18,17 +18,17 @@ exports.secureConnection = function(){
 	var j;
 	for (i = 0; i < hardware.length; i++){
 		nodes.push(hardware[i]);
-		if (hardware[i].nodeType == "router"){
+		if (hardware[i].nodeType == "Router"){
 			router.push(hardware[i]);
 		}
-		else if (hardware[i].nodeType == "server"){
+		else if (hardware[i].nodeType == "Server"){
 			server.push(hardware[i]);
 		}
 		else{
 			switches.push(hardware[i]);
 		}
 	}
-	
+    console.log(server[0].name)
 	// when connecting nodes to server, maintain at most square root of non-router nodes rounded connections
 	// only works while servers is less than square root of non-router nodes
 	// add routers that connect to server to routerCon list
@@ -36,22 +36,23 @@ exports.secureConnection = function(){
 	var routerCon = [];
 	for (i = 0; i < server.length; i++){
 			// eventually change so faster nodes are equally distributed among servers
-			while (server[i].connections.length <= Math.round(Math.sqrt(nodes.length - server.length))){
+			while (server[i].connections.length < Math.round(Math.sqrt(nodes.length - server.length))){
 				// choose fastest routers to connect to server 
 				// must not already be connected to a server
 				var curConnect = 0;
 				var curRouter;
 				// check routers unconnected to server
 				for (j = 0; j < tempRouters.length - 1; j++){
-					if (curConnect < router[j].ethbitRate){
-						curConnect = router[j].ethbitRate;
-						curRouter = router[j];
+					if (curConnect < tempRouters[j].ethbitRate){
+						curConnect = tempRouters[j].ethbitRate;
+						curRouter = tempRouters[j];
 					}
 				}
 				// connect higheset bit rate router to server and remove from list
 				modifyNodes.createConnection(server[i].name, curRouter.name);
 				tempRouters.splice(tempRouters.indexOf(curRouter),1);
-				routerCon.push(curRouter);
+                routerCon.push(curRouter);
+                console.log(server[i].connections)
 		}
 	}
 
@@ -59,7 +60,7 @@ exports.secureConnection = function(){
 	var routerUncon = router;
 	for (i = 0; i < routerUncon.length; i++){
 		if (routerCon.includes(routerUncon[i])){
-			routerUncon.splice(i,1);
+            routerUncon.splice(i,1);
 		}
 	}
 	
