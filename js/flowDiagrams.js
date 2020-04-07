@@ -83,7 +83,8 @@ dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
 
-rename = function () {
+rename = function (e) {
+	id = e.data.node.id
 	$("#modalcontainer").show();
 	document.getElementById("save").onclick = renamemodal
 	document.getElementById("cancel").onclick = 
@@ -186,7 +187,7 @@ function naming(){
 	dom.removeEventListener("click", naming)
 	
 	name = $("#nodelabel").val() 
-
+	
 	// TODO:
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
@@ -204,14 +205,16 @@ function naming(){
 		color: '#666'
 	});
 	s.refresh()
-	$("#modalcontainer").hide();
 	$("#nodelabel").val("")
+	$("#modalcontainer").hide();
+	
 }
 
 function renamemodal() {
 	dom.removeEventListener("click", naming)
 	name = $("#nodelabel").val() 
 	s.graph.nodes(id).label =  name
+	s.graph.nodes(id).id = name
 	s.refresh()
 	$("#modalcontainer").hide();
 	$("#nodelabel").val("")	
