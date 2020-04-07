@@ -43,6 +43,12 @@ let hardware = JSON.parse(rawdata);
 // delete a connection between two nodes by providing two names
 // nodeModification.deleteConnection("Router_1", "Router_2");
 
+function demoNodeNum() {
+	var x = document.getElementById("nodeNumber").value;
+	document.getElementById("demo").innerHTML = x;
+}
+
+
 var s,
 	g = {
 		nodes: [],

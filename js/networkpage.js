@@ -26,5 +26,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', function () {
 	document.getElementById('startConfigBtn')
-		.addEventListener('click', closeForm);
+		.addEventListener('click', demoNodeNum);
 });
