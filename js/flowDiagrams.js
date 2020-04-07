@@ -16,6 +16,7 @@ const fs = require('fs');
 // Custom class import
 var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
+var analysis = require("./js/pathAnalysis.js")
 
 // format of hardware database
 // Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
@@ -25,23 +26,29 @@ var nodeModification = require("./js/modifyNodes.js")
 let rawdata = fs.readFileSync('./hardware_database.json');
 let hardware = JSON.parse(rawdata);
 
-// add two nodes from the first two objects in the database
-// nodeModification.addNode("Router_1", hardware[0]);
-// nodeModification.addNode("Router_2", hardware[1]);
-// nodeModification.addNode("Router_3", hardware[1]);
+// create network to be tested for path analysis
 
-// delete a node by name
-// nodeModification.deleteNode("Router_1");
-// nodeModification.deleteNode("Router_2");
-// nodeModification.deleteNode("Router_3");
+/* nodeModification.addNode("Router_1", hardware[1]);
+nodeModification.addNode("Router_2", hardware[2]);
+nodeModification.addNode("Router_3", hardware[2]);
+nodeModification.addNode("Router_4", hardware[0]);
+nodeModification.addNode("Router_5", hardware[0]);
+nodeModification.addNode("Router_6", hardware[1]);
+nodeModification.addNode("Router_7", hardware[2]);
+nodeModification.addNode("Router_8", hardware[1]); */
 
-// make a connection between two nodes by providing two names 
 // error codes: 0 - successful, 1 - one of the routers is invalid, 2 - this connection already exists
-// status = nodeModification.createConnection("Router_1", "Router_2");
-// status = nodeModification.createConnection("Router_1", "Router_3");
-
-// delete a connection between two nodes by providing two names
-// nodeModification.deleteConnection("Router_1", "Router_2");
+/* status = nodeModification.createConnection("Router_1", "Router_2");
+status = nodeModification.createConnection("Router_1", "Router_3");
+status = nodeModification.createConnection("Router_2", "Router_4");
+status = nodeModification.createConnection("Router_3", "Router_4");
+status = nodeModification.createConnection("Router_4", "Router_5");
+status = nodeModification.createConnection("Router_5", "Router_6");
+status = nodeModification.createConnection("Router_5", "Router_7");
+status = nodeModification.createConnection("Router_7", "Router_8");
+ */
+// run path analysis on network
+//analysis.dijksta();
 
 var s,
 	g = {
