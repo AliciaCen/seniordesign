@@ -17,6 +17,7 @@ const fs = require('fs');
 var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
 var analysis = require("./js/pathAnalysis.js")
+var secureAlg = require("./js/secureAlg.js")
 
 // format of hardware database
 // Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
@@ -49,6 +50,13 @@ status = nodeModification.createConnection("Router_7", "Router_8");
  */
 // run path analysis on network
 //analysis.dijksta();
+
+/* nodeModification.addNode("Router_1", hardware[1]);
+nodeModification.addNode("Router_2", hardware[0]);
+nodeModification.addNode("Router_3", hardware[2]);
+nodeModification.addNode("Router_4", hardware[1]);
+nodeModification.addNode("Server_1", hardware[7]);
+secureAlg.secureConnection();*/
 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;

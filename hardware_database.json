@@ -115,7 +115,7 @@
     "brand": "Mellanox", 
     "model": "MCX515A", 
     "quality": "High", 
-    "nodeType": "Switch", 
+    "nodeType": "Server", 
     "WANports": 0, 
     "LANports": 1, 
     "ethbitRate": 1000000, 

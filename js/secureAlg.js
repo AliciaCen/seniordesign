@@ -1,4 +1,5 @@
 var Node = require("./Node.js")
+var modifyNodes = require("./modifyNodes.js")
 
 exports.secureConnection = function(){
 	// load in the nodeList.json file first
