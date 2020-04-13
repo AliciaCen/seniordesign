@@ -54,10 +54,19 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnection();
 
+
+	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 	document.getElementById("demo").innerHTML = x;
 }
+
+// variable for invidivdual error messages
+var errorMessage = "TEST ERROR -- errorMessage variable is working correctly";
+
+// find errorInfo and display the contents of errorMessage
+document.getElementById("errorInfo").innerHTML = errorMessage;
+
 
 
 var s,

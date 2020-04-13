@@ -209,3 +209,20 @@ input:checked + .slider:before {
 .form-inline label {
 	margin: 5px 5px 5px 20px;
 }
+
+
+	/*Error modal*/
+
+/* Error Footer */
+.error-footer {
+	padding: 2px 16px;
+	background-color: #d91414;
+	color: white;
+}
+
+/* Error Header */
+.error-header {
+	padding: 2px 16px;
+	background-color: #d91414;
+	color: white;
+}

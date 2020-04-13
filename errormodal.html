@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div class="modal-content" id="errorPopup">
+        <div class="error-header">
+            <h4>Error</h4>
+        </div>
+        <div class="modal-body">
+            <p>ProtoNet has encountered an error that requires your attention:</p>
+            <!-- errorInfo is where the specific error information will be displayed. The variable it gets this info from (errorMessage) is located in flowDiagrams.js-->
+            <p id="errorInfo"></p>
+            <p>Press Okay to continue.</p>
+        </div>
+        <div class="error-footer">
+            <button type="button" id="closeError" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+        </div>
+    </div>
+    
+</body>
+</html>
+<script src="js/flowDiagrams.js"></script>
