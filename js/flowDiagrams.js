@@ -243,11 +243,19 @@ function naming(){
 function renamemodal() {
 	dom.removeEventListener("click", naming)
 	name = $("#nodelabel").val() 
-	s.graph.nodes(id).label =  name
-	s.graph.nodes(id).id = name
-	s.refresh()
-	$("#modalcontainer").hide();
-	$("#nodelabel").val("")	
+	// check to see if user left node name blank
+	if (name == "") {
+		errorMessage = "Please enter a name for the node.";
+		showError();
+
+	}
+	else {
+		s.graph.nodes(id).label = name
+		s.graph.nodes(id).id = name
+		s.refresh()
+		$("#modalcontainer").hide();
+		$("#nodelabel").val("")
+	}
 }
 // Mode leaving functions
 
