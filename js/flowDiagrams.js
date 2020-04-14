@@ -55,13 +55,29 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnection();
 
-efficientAlg.generateNetwork(800, 88);
+//efficientAlg.generateNetwork(800, 88);
 
 //analysis.dijksta();
 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 	document.getElementById("demo").innerHTML = x;
+}
+
+// variable for invidivdual error messages
+var errorMessage = "TEST ERROR -- errorMessage variable is working correctly";
+
+
+
+function showError() {
+	$("#errorPopup").show();
+	// find errorInfo and display the contents of errorMessage
+	document.getElementById("errorInfo").innerHTML = errorMessage;
+
+	document.getElementById("closeError").onclick =
+		function () {
+			$("#errorPopup").hide()
+		}
 }
 
 
@@ -91,19 +107,6 @@ s = new sigma({
 dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
-
-rename = function (e) {
-	id = e.data.node.id
-	$("#modalcontainer").show();
-	document.getElementById("save").onclick = renamemodal
-	document.getElementById("cancel").onclick = 
-		function () {
-			$("#modalcontainer").hide()
-			$("#nodelabel").val("")
-		}
-}
-
-s.bind('doubleClickNode', rename);
 
 // Helper Functions
 addNode = function (e) {
@@ -192,42 +195,76 @@ removeEdge = function(e){
 	s.refresh()
 }
 
-function naming(){
+naming = function(){
 	dom.removeEventListener("click", naming)
 	
 	name = $("#nodelabel").val() 
-	
+	// check to see if user left node name blank
+	if (name == "") {
+		errorMessage = "Please enter a name for the node.";
+		showError();
+
+	}
+	else {
+		nodeModification.addNode(name, hardware[1], newx, newy);
+
+		console.log("Creating node " + name);
+
+		s.graph.addNode({
+			id: (id = name),
+			label: name,
+			size: 10,
+			x: newx,
+			y: newy,
+			color: '#666'
+		});
+		s.refresh()
+		$("#nodelabel").val("")
+		$("#modalcontainer").hide();
+	}
 	// TODO:
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
-
-	nodeModification.addNode(name, hardware[1], newx, newy);
-
-	console.log("Creating node " + name);
-
-	s.graph.addNode({
-		id: (id = name),
-		label: name,
-		size: 10,
-		x: newx,
-		y: newy,
-		color: '#666'
-	});
-	s.refresh()
-	$("#nodelabel").val("")
-	$("#modalcontainer").hide();
 	
+
+
+}
+
+rename = function (e) {
+	id = e.data.node.id
+	$("#modalcontainer").show();
+	document.getElementById("save").onclick = renamemodal
+	document.getElementById("cancel").onclick = 
+		function () {
+			$("#modalcontainer").hide()
+			$("#nodelabel").val("")
+		}
 }
 
 function renamemodal() {
 	dom.removeEventListener("click", naming)
 	name = $("#nodelabel").val() 
-	s.graph.nodes(id).label =  name
-	s.graph.nodes(id).id = name
-	s.refresh()
-	$("#modalcontainer").hide();
-	$("#nodelabel").val("")	
+	// check to see if user left node name blank
+	if (name == "") {
+		errorMessage = "Please enter a name for the node.";
+		showError();
+
+	}
+	else {
+		s.graph.nodes(id).label = name
+		s.graph.nodes(id).id = name
+		s.refresh()
+		$("#modalcontainer").hide();
+		$("#nodelabel").val("")
+	}
 }
+
+updateCoords = function(e) {
+	updatedNode = e.data.node
+
+	nodeModification.updateCoords(updatedNode)
+}
+
 // Mode leaving functions
 
 function endAdd(add) {
@@ -257,10 +294,13 @@ function endDisconnect(disconnect) {
 function endMove(move) {
 	move.checked = false;
 	sigma.plugins.killDragNodes(s);
+	s.unbind('clickNode', updateCoords)
 }
 
 
 // Mode listeners
+
+s.bind('doubleClickNode', rename); // Currently always active
 
 // Wait until the Toolbox is loaded
 var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
@@ -271,7 +311,7 @@ function onToolboxLoad() {
 		
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		//nodeModification.clearAll();
+		nodeModification.clearAll();
 
 		// Get inputs
 		add = document.getElementById('add');
@@ -363,6 +403,7 @@ function onToolboxLoad() {
 
 				// Turn on move mode
 				dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+				s.bind('clickNode', updateCoords);
 
 			} else {
 				// Turn off move mode

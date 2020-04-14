@@ -9,12 +9,17 @@ $(function(){
 $(function(){
 	$("#configModal").load("configmodal.html").hide();
 });
+$(function(){
+	$("#errorPopup").load("errormodal.html").hide();
+});
 function openForm() {
 	document.getElementById("networkConfig").style.display = "block";
 }
 function closeForm() {
 	document.getElementById("networkConfig").style.display = "none";
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
 	document.getElementById('openConfigBtn')
@@ -28,3 +33,4 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.getElementById('startConfigBtn')
 		.addEventListener('click', demoNodeNum);
 });
+

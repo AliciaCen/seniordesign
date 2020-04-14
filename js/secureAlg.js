@@ -3,37 +3,49 @@ var modifyNodes = require("./modifyNodes.js")
 
 exports.secureConnection = function(){
 	// load in the nodeList.json file first
-	// copied from delete connection
+	// copied from addNode
 	'use strict'
-	const fs = require('fs')
+	// first checks to see if there is already a node with that name 
+	'use strict';
+	const fs = require('fs');
+
+	// read the file first and then add the new node
 	let rawdata = fs.readFileSync('./nodeList.json');
+
+	// convert the rawdata into an array of objects
 	let hardware = JSON.parse(rawdata);
 
-	// list to hold all nodes and node types
-	var nodes = []
+	// create an array to store the nodes from the json file and to append the new addition
+	// list of instantiated variables for later use
+	var nodes = [];
+	var i;
+	var j;
 	var router = []
 	var server = []
 	var switches = []
-	var i;
-	var j;
+
 	for (i = 0; i < hardware.length; i++){
 		nodes.push(hardware[i]);
-		if (hardware[i].nodeType == "Router"){
-			router.push(hardware[i]);
+	}
+
+	for (i = 0; i < nodes.length; i++){
+		if (nodes[i].nodeType == "Router"){
+			router.push(nodes[i]);
 		}
-		else if (hardware[i].nodeType == "Server"){
-			server.push(hardware[i]);
+		else if (nodes[i].nodeType == "Server"){
+			server.push(nodes[i]);
 		}
 		else{
-			switches.push(hardware[i]);
+			switches.push(nodes[i]);
 		}
 	}
-    console.log(server[0].name)
+	// console.log(Math.round(Math.sqrt(nodes.length - server.length)))
+	// console.log(server[0].connections.length)
 	// when connecting nodes to server, maintain at most square root of non-router nodes rounded connections
 	// only works while servers is less than square root of non-router nodes
 	// add routers that connect to server to routerCon list
+	// length of connections isn't updated in real time, but in the JSON file
 	var tempRouters = router;
-	var routerCon = [];
 	for (i = 0; i < server.length; i++){
 			// eventually change so faster nodes are equally distributed among servers
 			while (server[i].connections.length < Math.round(Math.sqrt(nodes.length - server.length))){
@@ -51,19 +63,29 @@ exports.secureConnection = function(){
 				// connect higheset bit rate router to server and remove from list
 				modifyNodes.createConnection(server[i].name, curRouter.name);
 				tempRouters.splice(tempRouters.indexOf(curRouter),1);
-                routerCon.push(curRouter);
-                console.log(server[i].connections)
+				server[i].connections.push(1);
+				for (x = 0; router.length; x++){
+					if (curRouter.name = router[x].name){
+						router[x].connections.push(1);
+					}
+				}
+				console.log(server[i].connections.length)
 		}
 	}
 
-	// make list of unconnected routers
-	var routerUncon = router;
-	for (i = 0; i < routerUncon.length; i++){
-		if (routerCon.includes(routerUncon[i])){
-            routerUncon.splice(i,1);
+	// make list of unconnected and connected routers
+	var routerUncon = [];
+	var routerCon = [];
+	for (i = 0; i < router.length; i++){
+		if (router[i].connections.length = 0){
+            routerUncon.push(router[i]);
+		}
+		else{
+			routerCon.push(router[i]);
 		}
 	}
-	
+	console.log("connected routers are " + routerCon)
+	console.log("unconnected routers are " + routerUncon)
 	// make modifiable list of server connected routers
 	// connect remainder of routers to a server connected router based on fastest to slowest
 	// only works if number of unconnected routers is <= server connected routers
