@@ -24,7 +24,7 @@ exports.addNode = function(name, data, x, y){
 
 	// the data provided is a an object with all the information needed to create a new node
 	var newNode = new Node(name, data.brand, data.model, data.quality, data.nodeType, data.WANports,
-		data.LANports, data.ethbitRate, data.lobitRate, data.hibitRate, data.wireless, data.price, x, y)
+		data.LANports, data.ethbitRate, data.lobitRate, data.hibitRate, data.wireless, data.price, data.bandwidth, x, y)
 
 	// create an array to store the nodes from the json file and to append the new addition
 	var nodes = [];
@@ -32,7 +32,7 @@ exports.addNode = function(name, data, x, y){
 	for (i = 0; i < hardware.length; i++){
 		nodes.push(hardware[i]);
 	}
-	nodes.push(newNode);
+	nodes.push(newNode.toJSON());
 
 	// get the array into json format and then write it to the nodeList.json file
 	let newNodejson = JSON.stringify(nodes);
@@ -116,6 +116,15 @@ exports.createConnection = function(node1, node2){
 			return 2;
 		}
 	}
+	// next check to see if there is an available connection
+	if (hardware[firstIndex].connections.length == hardware[firstIndex].LANports){
+		console.log("The node " + hardware[firstIndex].name + " has no availbe space for a new connection.")
+		return 3;
+	}
+	if (hardware[secondIndex].connections.length == hardware[firstIndex].LANports){
+		console.log("The node " + hardware[secondIndex].name + " has no availbe space for a new connection.")
+		return 3;
+	}
 	// add the name of node2 to the list of connections for node1 and vice versa.
 	hardware[firstIndex].connections.push(node2);
 	hardware[secondIndex].connections.push(node1);
@@ -174,6 +183,24 @@ exports.deleteConnection = function(node1, node2){
 	// update the nodeList.json file with the updated information
 	var newjson = JSON.stringify(hardware);
 	fs.writeFileSync('./nodeList.json', newjson);
+}
+
+exports.updateCoords = function(updatedNode) {
+	const fs = require('fs')
+	let rawdata = fs.readFileSync('./nodeList.json');
+	let hardware = JSON.parse(rawdata);
+
+	for (var i = 0; i < hardware.length; i++) {
+		if (hardware[i].name == updatedNode.label) {
+			hardware[i].xValue = updatedNode.x;
+			hardware[i].yValue = updatedNode.y;
+		}
+	}
+
+	// update the nodeList.json file with the updated information
+	var newjson = JSON.stringify(hardware);
+	fs.writeFileSync('./nodeList.json', newjson);
+	return 0;
 }
 
 exports.clearAll = function() {

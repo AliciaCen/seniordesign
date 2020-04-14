@@ -18,6 +18,7 @@ var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
 var analysis = require("./js/pathAnalysis.js")
 var secureAlg = require("./js/secureAlg.js")
+var efficientAlg = require("./js/efficentAlg.js")
 
 // format of hardware database
 // Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
@@ -54,8 +55,10 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnection();
 
+//efficientAlg.generateNetwork(800, 88);
 
-	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
+//analysis.dijksta();
+
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 	document.getElementById("demo").innerHTML = x;
@@ -104,19 +107,6 @@ s = new sigma({
 dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
-
-rename = function (e) {
-	id = e.data.node.id
-	$("#modalcontainer").show();
-	document.getElementById("save").onclick = renamemodal
-	document.getElementById("cancel").onclick = 
-		function () {
-			$("#modalcontainer").hide()
-			$("#nodelabel").val("")
-		}
-}
-
-s.bind('doubleClickNode', rename);
 
 // Helper Functions
 addNode = function (e) {
@@ -205,7 +195,7 @@ removeEdge = function(e){
 	s.refresh()
 }
 
-function naming(){
+naming = function(){
 	dom.removeEventListener("click", naming)
 	
 	name = $("#nodelabel").val() 
@@ -235,20 +225,46 @@ function naming(){
 	// TODO:
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
-
-
 	
+
+
+}
+
+rename = function (e) {
+	id = e.data.node.id
+	$("#modalcontainer").show();
+	document.getElementById("save").onclick = renamemodal
+	document.getElementById("cancel").onclick = 
+		function () {
+			$("#modalcontainer").hide()
+			$("#nodelabel").val("")
+		}
 }
 
 function renamemodal() {
 	dom.removeEventListener("click", naming)
 	name = $("#nodelabel").val() 
-	s.graph.nodes(id).label =  name
-	s.graph.nodes(id).id = name
-	s.refresh()
-	$("#modalcontainer").hide();
-	$("#nodelabel").val("")	
+	// check to see if user left node name blank
+	if (name == "") {
+		errorMessage = "Please enter a name for the node.";
+		showError();
+
+	}
+	else {
+		s.graph.nodes(id).label = name
+		s.graph.nodes(id).id = name
+		s.refresh()
+		$("#modalcontainer").hide();
+		$("#nodelabel").val("")
+	}
 }
+
+updateCoords = function(e) {
+	updatedNode = e.data.node
+
+	nodeModification.updateCoords(updatedNode)
+}
+
 // Mode leaving functions
 
 function endAdd(add) {
@@ -278,10 +294,13 @@ function endDisconnect(disconnect) {
 function endMove(move) {
 	move.checked = false;
 	sigma.plugins.killDragNodes(s);
+	s.unbind('clickNode', updateCoords)
 }
 
 
 // Mode listeners
+
+s.bind('doubleClickNode', rename); // Currently always active
 
 // Wait until the Toolbox is loaded
 var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
@@ -292,7 +311,7 @@ function onToolboxLoad() {
 		
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		//nodeModification.clearAll();
+		nodeModification.clearAll();
 
 		// Get inputs
 		add = document.getElementById('add');
@@ -384,6 +403,7 @@ function onToolboxLoad() {
 
 				// Turn on move mode
 				dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+				s.bind('clickNode', updateCoords);
 
 			} else {
 				// Turn off move mode

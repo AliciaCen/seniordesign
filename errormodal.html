@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <div class="modal-content" id="errorPopup">
+    <div class="error-modal-content" id="errorPopup">
         <div class="error-header">
             <h4>Error</h4>
         </div>
         <div class="modal-body">
             <p>ProtoNet has encountered an error that requires your attention:</p>
             <!-- errorInfo is where the specific error information will be displayed. The variable it gets this info from (errorMessage) is located in flowDiagrams.js-->
+            <b>
             <p id="errorInfo"></p>
+            </b>
             <p>Press Okay to continue.</p>
         </div>
         <div class="error-footer">

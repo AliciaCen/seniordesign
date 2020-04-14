@@ -213,15 +213,30 @@ input:checked + .slider:before {
 
 	/*Error modal*/
 
-/* Error Footer */
-.error-footer {
+
+ /* Error Header */
+.error-header {
 	padding: 2px 16px;
 	background-color: #d91414;
 	color: white;
 }
 
-/* Error Header */
-.error-header {
+
+ /* Error Modal Content */
+.error-modal-content {
+	position: absolute;
+	top: 30%;
+	left: 40%;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 400px;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+  /* Error Footer */
+.error-footer {
 	padding: 2px 16px;
 	background-color: #d91414;
 	color: white;
