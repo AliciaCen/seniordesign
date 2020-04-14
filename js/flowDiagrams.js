@@ -105,19 +105,6 @@ dom = document.querySelector('#graph-container canvas:last-child');
 cam = s.camera;
 
 
-rename = function (e) {
-	id = e.data.node.id
-	$("#modalcontainer").show();
-	document.getElementById("save").onclick = renamemodal
-	document.getElementById("cancel").onclick = 
-		function () {
-			$("#modalcontainer").hide()
-			$("#nodelabel").val("")
-		}
-}
-
-s.bind('doubleClickNode', rename);
-
 // Helper Functions
 addNode = function (e) {
 	var x, y, p, id;
@@ -205,7 +192,7 @@ removeEdge = function(e){
 	s.refresh()
 }
 
-function naming(){
+naming = function(){
 	dom.removeEventListener("click", naming)
 	
 	name = $("#nodelabel").val() 
@@ -235,9 +222,20 @@ function naming(){
 	// TODO:
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
-
-
 	
+
+
+}
+
+rename = function (e) {
+	id = e.data.node.id
+	$("#modalcontainer").show();
+	document.getElementById("save").onclick = renamemodal
+	document.getElementById("cancel").onclick = 
+		function () {
+			$("#modalcontainer").hide()
+			$("#nodelabel").val("")
+		}
 }
 
 function renamemodal() {
@@ -257,6 +255,13 @@ function renamemodal() {
 		$("#nodelabel").val("")
 	}
 }
+
+updateCoords = function(e) {
+	updatedNode = e.data.node
+
+	nodeModification.updateCoords(updatedNode)
+}
+
 // Mode leaving functions
 
 function endAdd(add) {
@@ -286,10 +291,13 @@ function endDisconnect(disconnect) {
 function endMove(move) {
 	move.checked = false;
 	sigma.plugins.killDragNodes(s);
+	s.unbind('clickNode', updateCoords)
 }
 
 
 // Mode listeners
+
+s.bind('doubleClickNode', rename); // Currently always active
 
 // Wait until the Toolbox is loaded
 var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
@@ -300,7 +308,7 @@ function onToolboxLoad() {
 		
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		//nodeModification.clearAll();
+		nodeModification.clearAll();
 
 		// Get inputs
 		add = document.getElementById('add');
@@ -392,6 +400,7 @@ function onToolboxLoad() {
 
 				// Turn on move mode
 				dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+				s.bind('clickNode', updateCoords);
 
 			} else {
 				// Turn off move mode

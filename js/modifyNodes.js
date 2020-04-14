@@ -177,6 +177,24 @@ exports.deleteConnection = function(node1, node2){
 	fs.writeFileSync('./nodeList.json', newjson);
 }
 
+exports.updateCoords = function(updatedNode) {
+	const fs = require('fs')
+	let rawdata = fs.readFileSync('./nodeList.json');
+	let hardware = JSON.parse(rawdata);
+
+	for (var i = 0; i < hardware.length; i++) {
+		if (hardware[i].name == updatedNode.label) {
+			hardware[i].xValue = updatedNode.x;
+			hardware[i].yValue = updatedNode.y;
+		}
+	}
+
+	// update the nodeList.json file with the updated information
+	var newjson = JSON.stringify(hardware);
+	fs.writeFileSync('./nodeList.json', newjson);
+	return 0;
+}
+
 exports.clearAll = function() {
 	console.log("Clearing all nodes")
 
