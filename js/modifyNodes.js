@@ -117,6 +117,15 @@ exports.createConnection = function(node1, node2){
 			return 2;
 		}
 	}
+	// next check to see if there is an available connection
+	if (hardware[firstIndex].connections.length == hardware[firstIndex].LANports){
+		console.log("The node " + hardware[firstIndex].name + " has no availbe space for a new connection.")
+		return 3;
+	}
+	if (hardware[secondIndex].connections.length == hardware[firstIndex].LANports){
+		console.log("The node " + hardware[secondIndex].name + " has no availbe space for a new connection.")
+		return 3;
+	}
 	// add the name of node2 to the list of connections for node1 and vice versa.
 	hardware[firstIndex].connections.push(node2);
 	hardware[secondIndex].connections.push(node1);

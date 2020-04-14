@@ -18,6 +18,7 @@ var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
 var analysis = require("./js/pathAnalysis.js")
 var secureAlg = require("./js/secureAlg.js")
+var efficientAlg = require("./js/efficientAlg.js");
 
 // format of hardware database
 // Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
@@ -54,6 +55,7 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnection();
 
+//efficientAlg.generateNetwork(8000,88);
 
 	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {

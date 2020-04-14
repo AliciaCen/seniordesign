@@ -10,7 +10,8 @@
     "lobitRate": 800, 
     "hibitRate": 1300, 
     "wireless": 1, 
-    "price": 77.98
+    "price": 77.98,
+    "bandwidth": 4000
     } 
 , 
     {
@@ -24,7 +25,8 @@
     "lobitRate": 300, 
     "hibitRate": 433, 
     "wireless": 1, 
-    "price": 39.99
+    "price": 39.99,
+    "bandwidth": 400
     }
 ,
     {
@@ -38,7 +40,8 @@
     "lobitRate": 300, 
     "hibitRate": 700, 
     "wireless": 1, 
-    "price": 59.99
+    "price": 59.99,
+    "bandwidth": 2000
     }
 ,
     {
@@ -52,7 +55,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 49.99
+    "price": 49.99,
+    "bandwidth": 16000
     }
 ,
     {
@@ -66,7 +70,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 89.99
+    "price": 89.99,
+    "bandwidth": 32000
     }
 ,
     {
@@ -80,7 +85,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 134.99
+    "price": 134.99,
+    "bandwidth": 48000
     }
 ,
     {
@@ -94,7 +100,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 253.00
+    "price": 253.00,
+    "bandwidth": 4000
     }
 ,
     {
@@ -108,7 +115,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 315.00
+    "price": 315.00,
+    "bandwidth": 80000
     }
 ,
     {
@@ -122,7 +130,8 @@
     "lobitRate": 0, 
     "hibitRate": 0, 
     "wireless": 0, 
-    "price": 770.00
+    "price": 770.00,
+    "bandwidth": 1000000
     }
 ]
     
