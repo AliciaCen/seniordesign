@@ -19,12 +19,6 @@ function closeForm() {
 	document.getElementById("networkConfig").style.display = "none";
 }
 
-function openErrorPopup() {
-	document.getElementById("errorPopup").style.display = "block";
-}
-function closeErrorPopup() {
-	document.getElementById("errorPopup").style.display = "none";
-}
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -40,12 +34,3 @@ document.addEventListener('DOMContentLoaded', function () {
 		.addEventListener('click', demoNodeNum);
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('openError')
-		.addEventListener('click', openErrorPopup);
-});
-document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('closeError')
-		.addEventListener('click', closeErrorPopup);
-});
