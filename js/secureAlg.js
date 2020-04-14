@@ -23,7 +23,7 @@ exports.secureConnection = function(){
 	var router = []
 	var server = []
 	var switches = []
-
+	var x;
 	for (i = 0; i < hardware.length; i++){
 		nodes.push(hardware[i]);
 	}
@@ -39,16 +39,16 @@ exports.secureConnection = function(){
 			switches.push(nodes[i]);
 		}
 	}
-	// console.log(Math.round(Math.sqrt(nodes.length - server.length)))
-	// console.log(server[0].connections.length)
+
 	// when connecting nodes to server, maintain at most square root of non-router nodes rounded connections
 	// only works while servers is less than square root of non-router nodes
 	// add routers that connect to server to routerCon list
 	// length of connections isn't updated in real time, but in the JSON file
 	var tempRouters = router;
+	console.log(tempRouters);
 	for (i = 0; i < server.length; i++){
 			// eventually change so faster nodes are equally distributed among servers
-			while (server[i].connections.length < Math.round(Math.sqrt(nodes.length - server.length))){
+			while (server[i].connections.length <= Math.round(Math.sqrt(nodes.length - server.length))){
 				// choose fastest routers to connect to server 
 				// must not already be connected to a server
 				var curConnect = 0;
@@ -61,15 +61,16 @@ exports.secureConnection = function(){
 					}
 				}
 				// connect higheset bit rate router to server and remove from list
+				server[i].connections.push(curRouter.name);
+				console.log(server[i].connections.length);
 				modifyNodes.createConnection(server[i].name, curRouter.name);
 				tempRouters.splice(tempRouters.indexOf(curRouter),1);
-				server[i].connections.push(1);
-				for (x = 0; router.length; x++){
-					if (curRouter.name = router[x].name){
+				/*for (x = 0; router.length; x++){
+					// this brings an error of unidentified type name, but .name works
+					if (curRouter.name == router[x].name){
 						router[x].connections.push(1);
 					}
-				}
-				console.log(server[i].connections.length)
+				}*/
 		}
 	}
 
@@ -77,7 +78,8 @@ exports.secureConnection = function(){
 	var routerUncon = [];
 	var routerCon = [];
 	for (i = 0; i < router.length; i++){
-		if (router[i].connections.length = 0){
+		console.log(router[i].connections.length)
+		if (router[i].connections.length == 0){
             routerUncon.push(router[i]);
 		}
 		else{
