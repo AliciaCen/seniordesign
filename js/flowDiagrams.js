@@ -55,7 +55,7 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //secureAlg.secureConnection();
 
 
-	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes
+	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 	document.getElementById("demo").innerHTML = x;
@@ -64,9 +64,18 @@ function demoNodeNum() {
 // variable for invidivdual error messages
 var errorMessage = "TEST ERROR -- errorMessage variable is working correctly";
 
-// find errorInfo and display the contents of errorMessage
-document.getElementById("errorInfo").innerHTML = errorMessage;
 
+
+function showError() {
+	$("#errorPopup").show();
+	// find errorInfo and display the contents of errorMessage
+	document.getElementById("errorInfo").innerHTML = errorMessage;
+
+	document.getElementById("closeError").onclick =
+		function () {
+			$("#errorPopup").hide()
+		}
+}
 
 
 var s,
@@ -200,26 +209,34 @@ function naming(){
 	dom.removeEventListener("click", naming)
 	
 	name = $("#nodelabel").val() 
-	
+	// check to see if user left node name blank
+	if (name == "") {
+		errorMessage = "Please enter a name for the node.";
+		showError();
+
+	}
+	else {
+		nodeModification.addNode(name, hardware[1], newx, newy);
+
+		console.log("Creating node " + name);
+
+		s.graph.addNode({
+			id: (id = name),
+			label: name,
+			size: 10,
+			x: newx,
+			y: newy,
+			color: '#666'
+		});
+		s.refresh()
+		$("#nodelabel").val("")
+		$("#modalcontainer").hide();
+	}
 	// TODO:
 	// - Define Chosen Hardware
 	// - Function accepts Coordinate System
 
-	nodeModification.addNode(name, hardware[1], newx, newy);
 
-	console.log("Creating node " + name);
-
-	s.graph.addNode({
-		id: (id = name),
-		label: name,
-		size: 10,
-		x: newx,
-		y: newy,
-		color: '#666'
-	});
-	s.refresh()
-	$("#nodelabel").val("")
-	$("#modalcontainer").hide();
 	
 }
 

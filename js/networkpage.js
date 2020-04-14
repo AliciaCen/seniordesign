@@ -10,7 +10,7 @@ $(function(){
 	$("#configModal").load("configmodal.html").hide();
 });
 $(function(){
-	$("#errorpopup").load("errormodal.html");
+	$("#errorPopup").load("errormodal.html").hide();
 });
 function openForm() {
 	document.getElementById("networkConfig").style.display = "block";
