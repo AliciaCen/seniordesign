@@ -1,6 +1,6 @@
 module.exports = class Node {
 	constructor(name = "", brand = "", model = "", quality = "", nodeType = "Router", WANports = 1, LANports = 4, ethbitRate = 0 , lobitRate = 0, 
-	hibitRate = 0, wireless = 0, price = 0, xValue = 0, yValue = 0, connections = []) {
+	hibitRate = 0, wireless = 0, price = 0, bandwidth = 0, xValue = 0, yValue = 0, connections = []) {
 		this.name = name;
 		this.brand = brand;
 		this.model = model;
@@ -13,6 +13,7 @@ module.exports = class Node {
 		this.hibitRate = hibitRate;
 		this.wireless = wireless;
 		this.price = price;
+		this.bandwidth = bandwidth;
 		this.xValue = xValue;
 		this.yValue = yValue;
 		this.connections = connections;

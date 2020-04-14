@@ -18,6 +18,7 @@ var Node = require("./js/Node.js")
 var nodeModification = require("./js/modifyNodes.js")
 var analysis = require("./js/pathAnalysis.js")
 var secureAlg = require("./js/secureAlg.js")
+var efficientAlg = require("./js/efficentAlg.js")
 
 // format of hardware database
 // Brand, Model, Quality, Node type, WAN ports, LAN ports, Ethernet speed, 2.4 GHz speed, 5.0GHz speed, 
@@ -53,6 +54,10 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 
 //nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnection();
+
+efficientAlg.generateNetwork(800, 88);
+
+//analysis.dijksta();
 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
