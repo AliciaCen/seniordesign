@@ -23,7 +23,8 @@ exports.addNode = function(name, data, x, y){
 	}
 
 	// the data provided is a an object with all the information needed to create a new node
-	var newNode = new Node(name, data.brand, data.model, data.quality, data.nodeType, data.WANports,
+	var newNode = new Node()
+	newNode.defineAll(name, data.brand, data.model, data.quality, data.nodeType, data.WANports,
 		data.LANports, data.ethbitRate, data.lobitRate, data.hibitRate, data.wireless, data.price, x, y)
 
 	// create an array to store the nodes from the json file and to append the new addition
@@ -32,7 +33,7 @@ exports.addNode = function(name, data, x, y){
 	for (i = 0; i < hardware.length; i++){
 		nodes.push(hardware[i]);
 	}
-	nodes.push(newNode);
+	nodes.push(newNode.toJSON());
 
 	// get the array into json format and then write it to the nodeList.json file
 	let newNodejson = JSON.stringify(nodes);
