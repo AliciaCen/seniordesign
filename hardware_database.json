@@ -133,5 +133,53 @@
     "price": 770.00,
     "bandwidth": 1000000
     }
+,
+    {
+    "brand": "Watchguard", 
+    "model": "Firebox T15", 
+    "quality": "Low", 
+    "nodeType": "Firewall", 
+    "WANports": 1, 
+    "LANports": 3, 
+    "ethbitRate": 400, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 258.40,
+    "bandwidth": 400,
+    "users": 10
+    }
+,
+    {
+    "brand": "Sophos", 
+    "model": "XG 106 REV.1", 
+    "quality": "Medium", 
+    "nodeType": "Firewall", 
+    "WANports": 1, 
+    "LANports": 6, 
+    "ethbitRate": 500, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 446.50,
+    "bandwidth": 500,
+    "users": 25
+    }
+,
+    {
+    "brand": "Watchguard", 
+    "model": "Firebox M270", 
+    "quality": "High", 
+    "nodeType": "Firewall", 
+    "WANports": 1, 
+    "LANports": 6, 
+    "ethbitRate": 1800, 
+    "lobitRate": 0, 
+    "hibitRate": 0, 
+    "wireless": 0, 
+    "price": 1174.20,
+    "bandwidth": 1800,
+    "users": 100
+    }
 ]
     

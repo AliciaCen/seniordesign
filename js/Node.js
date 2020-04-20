@@ -14,9 +14,10 @@ module.exports = class Node {
 	#xValue = 0;
 	#yValue = 0;
 	#connections = [];
+	#users = 0;
 
 	defineAll(name, brand, model, quality, nodeType, WANports, LANports, ethbitRate, lobitRate, 
-	hibitRate, wireless, price, xValue, yValue, connections){
+	hibitRate, wireless, price, xValue, yValue, connections, users){
 		this.name = name;
 		this.brand = brand;
 		this.model = model;
@@ -32,6 +33,7 @@ module.exports = class Node {
 		this.xValue = xValue;
 		this.yValue = yValue;
 		this.connections = connections;
+		this.users = users;
 	}
 
 	get name() { return this.#name;	};
