@@ -195,31 +195,46 @@ removeEdge = function(e){
 }
 
 naming = function(){
-	dom.removeEventListener("click", naming)
-	
 	name = $("#nodelabel").val() 
 	// check to see if user left node name blank
 	if (name == "") {
 		errorMessage = "Please enter a name for the node.";
 		showError();
-
+		
 	}
 	else {
-		nodeModification.addNode(name, hardware[1], newx, newy);
+		// Check to see if the node name already exists
+		currentNodes = s.graph.nodes()
+		duplicate = false;
+		for (var i = 0; i < currentNodes.length; i ++) {
+			if (name == currentNodes[i].id) {
+				duplicate = true;
+			}
+		}
 
-		console.log("Creating node " + name);
+		if (duplicate) {
+			errorMessage = "Name already exists";
+			showError();
+		}
+		else {
+			document.getElementById("save").removeEventListener("click", naming);
 
-		s.graph.addNode({
-			id: (id = name),
-			label: name,
-			size: 10,
-			x: newx,
-			y: newy,
-			color: '#666'
-		});
-		s.refresh()
-		$("#nodelabel").val("")
-		$("#modalcontainer").hide();
+			nodeModification.addNode(name, hardware[1], newx, newy);
+
+			console.log("Creating node " + name);
+	
+			s.graph.addNode({
+				id: (id = name),
+				label: name,
+				size: 10,
+				x: newx,
+				y: newy,
+				color: '#666'
+			});
+			s.refresh()
+			$("#nodelabel").val("")
+			$("#modalcontainer").hide();
+		}
 	}
 	// TODO:
 	// - Define Chosen Hardware
