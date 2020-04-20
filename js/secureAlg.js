@@ -1,109 +1,176 @@
 var Node = require("./Node.js")
 var modifyNodes = require("./modifyNodes.js")
 
-exports.secureConnection = function(){
-	// load in the nodeList.json file first
-	// copied from addNode
-	'use strict'
-	// first checks to see if there is already a node with that name 
-	'use strict';
-	const fs = require('fs');
+exports.secureConnections = function(workstations){
+    // load in the hardware database
+    const fs = require('fs');
+    let rawdata = fs.readFileSync('./hardware_database.json');
+    let hardware = JSON.parse(rawdata);
 
-	// read the file first and then add the new node
-	let rawdata = fs.readFileSync('./nodeList.json');
+    // create the inital network based on the number of workstations
+    var i;
+    var j;
+    var switches = 0;
+	var servers = 0;
+	var firewalls = 0;
+    var switchSpace = 0;
+    var nodes = 0;
+    var connected = 0;
 
-	// convert the rawdata into an array of objects
-	let hardware = JSON.parse(rawdata);
-
-	// create an array to store the nodes from the json file and to append the new addition
-	// list of instantiated variables for later use
-	var nodes = [];
-	var i;
-	var j;
-	var router = []
-	var server = []
-	var switches = []
-	var x;
+	// for now we will assume gigabit internet speeds going into the network from the internet
+	
+    // find a router that can handle gigabit speeds and create a new node with that data and append it to the nodes list
+    for (i = 0; i < hardware.length; i++){
+        if ((hardware[i].nodeType == "Router") && (hardware[i].ethbitRate == 1000)){
+            nodeModification.addNode("Edge Router", hardware[i]);
+            console.log("Added a router connected to the Internet.");
+		}
+		for (i = 0; i < hardware.length; i++){
+        		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 100)){
+            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+					console.log("Added a new firewall");
+					nodeModification.createConnection("Firewall_" + firewalls, "Edge Router")
+					firewalls++;
+        		}
+    		}
+	}
+	
+	// Create central router/switch to connect servers, switches, and edge router together using a medium switch to support all connections
 	for (i = 0; i < hardware.length; i++){
-		nodes.push(hardware[i]);
+        if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Medium")){
+            nodeModification.addNode("Central Router", hardware[i]);
+            console.log("Added a router connected to the Internet.");
+		}
+		for (i = 0; i < hardware.length; i++){
+        		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 100)){
+            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+					console.log("Added a new firewall");
+					nodeModification.createConnection("Firewall_" + firewalls, "Central Router")
+					firewalls++;
+        		}
+    		}
+    }
+    
+    // next add enough switches to handle connections based on the number of workstations specified. 
+    // each switch should connect to a firewall that connects to a central router
+
+    while (connected < workstations){
+        if (workstations - connected > 7){
+            // add a 16 port switch
+            for (i = 0; i < hardware.length; i++){
+                if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Medium")){
+                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    // switches is used for the enumeration of switch names
+                    switches++;
+                }
+            }
+            connected = connected + 15;
+			console.log("Added a 16 port switch");
+			// create proper firewall for 16 port switches
+			for (i = 0; i < hardware.length; i++){
+        		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 25)){
+            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+					console.log("Added a new firewall");
+					nodeModification.createConnection("Firewall_" + firewalls, "Switch" + (switches - 1))
+					firewalls++;
+        		}
+    		}
+        }
+        else if (workstations - connected <= 7){
+            // add an 8 port switch
+            for (i = 0; i < hardware.length; i++){
+                if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Low")){
+                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    // switches is used for the enumeration of switch names
+                    switches++;
+                }
+            }
+            connected = connected + 7;
+			console.log("Added an 8 port switch");
+			// create proper firewall for 8 port switches
+			for (i = 0; i < hardware.length; i++){
+        		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 10)){
+            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+					console.log("Added a new firewall");
+					nodeModification.createConnection("Firewall_" + firewalls, "Switch" + (switches - 1))
+					firewalls++;
+        		}
+    		}
+        }
+    }
+    // next add data servers for intra-network file sharing. Low quailty is for workstations, medium and high quaility are for servers
+    // the number of servers needed depend on how many switches there are. 
+    while (switchSpace < switches){
+
+        // add a data server to accomadate additional switches
+        for (i = 0; i < hardware.length; i++){
+            if ((hardware[i].nodeType == "Server") && (hardware[i].quality == "Medium")){
+                nodeModification.addNode("Server_" + servers, hardware[i]);
+                console.log("Added a data server.");
+            }
+        }
+        switchSpace = switchSpace + 2;
+        servers++;
+    }
+	
+	// create firewall for server zone
+	for (i = 0; i < hardware.length; i++){
+		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 10)){
+			nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+			console.log("Added a new firewall");
+			firewalls++;
+		}
 	}
 
-	for (i = 0; i < nodes.length; i++){
-		if (nodes[i].nodeType == "Router"){
-			router.push(nodes[i]);
-		}
-		else if (nodes[i].nodeType == "Server"){
-			server.push(nodes[i]);
-		}
-		else{
-			switches.push(nodes[i]);
-		}
+	// connect all servers to server firewall
+	for (i = 0; i < servers; i++){
+		nodeModification.createConnection("Server_" + i, "Firewall_" + (firewalls - 1));
 	}
 
-	// when connecting nodes to server, maintain at most square root of non-router nodes rounded connections
-	// only works while servers is less than square root of non-router nodes
-	// add routers that connect to server to routerCon list
-	// length of connections isn't updated in real time, but in the JSON file
-	var tempRouters = router;
-	console.log(tempRouters);
-	for (i = 0; i < server.length; i++){
-			// eventually change so faster nodes are equally distributed among servers
-			while (server[i].connections.length <= Math.round(Math.sqrt(nodes.length - server.length))){
-				// choose fastest routers to connect to server 
-				// must not already be connected to a server
-				var curConnect = 0;
-				var curRouter;
-				// check routers unconnected to server
-				for (j = 0; j < tempRouters.length - 1; j++){
-					if (curConnect < tempRouters[j].ethbitRate){
-						curConnect = tempRouters[j].ethbitRate;
-						curRouter = tempRouters[j];
-					}
-				}
-				// connect higheset bit rate router to server and remove from list
-				server[i].connections.push(curRouter.name);
-				console.log(server[i].connections.length);
-				modifyNodes.createConnection(server[i].name, curRouter.name);
-				tempRouters.splice(tempRouters.indexOf(curRouter),1);
-				/*for (x = 0; router.length; x++){
-					// this brings an error of unidentified type name, but .name works
-					if (curRouter.name == router[x].name){
-						router[x].connections.push(1);
-					}
-				}*/
-		}
-	}
+    // make connections between the edge router, switches, and the server
+    for (i = 0; i < firewalls; i++){
+        nodeModification.createConnection("Central Router", "Firewall_" + i);
+    }
+    console.log("Central Router has been connected to all the Firewalls.");
 
-	// make list of unconnected and connected routers
-	var routerUncon = [];
-	var routerCon = [];
-	for (i = 0; i < router.length; i++){
-		console.log(router[i].connections.length)
-		if (router[i].connections.length == 0){
-            routerUncon.push(router[i]);
+    // now connect all the switches to the data server(s)
+    // each data server in this configuration can accomodate 2 switches
+	// disabled because zones connect to central router/switch instead of to each server
+	/*j = 0;
+    for (i = 0; i < switches; i++){
+        if (i < 2){
+            nodeModification.createConnection("Switch_" + i, "Server_" + j)
+        }
+        if (i == 1){
+            j++
+        }
+        if (i >= 2){
+            nodeModification.createConnection("Switch_" + i, "Server_" + j)
+        }
+        console.log("Connected Switch_" + i + " to Server_" + j);
+    }*/
+
+    // create all the workstations with the low quality server hardware
+    for (i = 0; i < hardware.length; i++){
+        if (hardware[i].nodeType == "Server" && hardware[i].quality == "Low"){
+            while (nodes < workstations){
+                nodeModification.addNode("workstation_" + nodes, hardware[i]);
+                console.log("Created workstation_" + nodes);
+                nodes++;
+            }
+        }
+    }
+
+    // now connect all the workstations to switches
+    nodes = 0;
+    i = 0;
+        while (nodes < workstations){
+            if (nodeModification.createConnection("Switch_" + i, "workstation_" + nodes) == 0){
+                console.log("Connected workstation_" + nodes + " to Switch_" + i);
+                nodes++;
+            }
+            else{
+                i++;
+            }
 		}
-		else{
-			routerCon.push(router[i]);
-		}
-	}
-	console.log("connected routers are " + routerCon)
-	console.log("unconnected routers are " + routerUncon)
-	// make modifiable list of server connected routers
-	// connect remainder of routers to a server connected router based on fastest to slowest
-	// only works if number of unconnected routers is <= server connected routers
-	var routerToCon = routerCon;
-	var curConnect = 0;
-	var curRouter;
-	// connect all unconnected nodes to one connected to routers
-	for (i = 0; i < routerUncon.length; i++){
-		for (j = 0; j < routerToCon.length;){
-			if (routerToCon[j].ethbitRate > curConnect){
-				curConnect = routerToCon[j].ethbitRate;
-				curRouter = routerToCon[j];
-			}
-			modifyNodes.createConnection(routerUncon[i].name, curRouter.name);
-			tempRouters.splice(routerToCon.indexOf(curRouter),1);
-			routerUncon.push(curRouter);
-		}
-	}
 }
