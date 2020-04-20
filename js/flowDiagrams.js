@@ -264,6 +264,60 @@ updateCoords = function(e) {
 	nodeModification.updateCoords(updatedNode)
 }
 
+loadConfig = function(fileName) {
+	nodeModification.clearAll();
+
+	nodeConfig = nodeModification.getNodeConfigByFile(fileName)
+
+	// Add all nodes to the canvas
+	for (var i = 0; i < nodeConfig.length; i++) {
+		n = nodeConfig[i]
+		s.graph.addNode({
+			id: (id = n.name),
+			label: n.name,
+			size: 10,
+			x: n.xValue,
+			y: n.yValue,
+			color: '#666'
+		});
+
+	}
+
+	// Create all connections
+	for (var i = 0; i < nodeConfig.length; i++) {
+		n = nodeConfig[i]
+		for (var j = 0; j < n.connections.length; j++) {
+			src = n.name
+			tgt = n.connections[j]
+
+			// Verify the connection doesn't already exist
+			exists = false;
+			edges = s.graph.edges()
+			for (var e = 0; e < edges.length; e++) {
+				if ((edges[e].source == src && edges[e].target == tgt) || (edges[e].source == tgt && edges[e].target == src)) {
+					exists = true;
+				}
+			}
+
+			// If not, add the connection
+			if (!exists) {
+				s.graph.addEdge({
+					id: 'e' + src + "-" + tgt,
+					source: src,
+					target: tgt,
+					size: 3,
+					type: 'line',
+					color: '#ccc',
+					hover_color: '#000'
+				});
+			}
+		}
+	}
+
+	s.refresh()
+	nodeModification.writeCurrentConfig(nodeConfig)
+}
+
 // Mode leaving functions
 
 function endAdd(add) {
@@ -311,6 +365,8 @@ function onToolboxLoad() {
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
 		nodeModification.clearAll();
+
+		loadConfig("exampleConfig.json")
 
 		// Get inputs
 		add = document.getElementById('add');

@@ -213,3 +213,16 @@ exports.clearAll = function() {
 	// Write empty JSON
 	fs.writeFileSync('./nodeList.json', JSON.stringify([]));
 }
+
+exports.getNodeConfigByFile = function(fileName) {
+	const fs = require('fs')
+	let rawdata = fs.readFileSync('./' + fileName);
+	let hardware = JSON.parse(rawdata);
+
+	return hardware
+}
+
+exports.writeCurrentConfig = function(config) {
+	const fs = require('fs')
+	fs.writeFileSync('./nodeList.json', JSON.stringify(config));
+}
