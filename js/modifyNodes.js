@@ -122,7 +122,7 @@ exports.createConnection = function(node1, node2){
 		console.log("The node " + hardware[firstIndex].name + " has no availbe space for a new connection.")
 		return 3;
 	}
-	if (hardware[secondIndex].connections.length == hardware[firstIndex].LANports){
+	if (hardware[secondIndex].connections.length == hardware[secondIndex].LANports){
 		console.log("The node " + hardware[secondIndex].name + " has no availbe space for a new connection.")
 		return 3;
 	}

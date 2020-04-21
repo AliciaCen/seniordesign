@@ -53,9 +53,9 @@ status = nodeModification.createConnection("Router_7", "Router_8");
 //analysis.dijksta();
 
 //nodeModification.addNode("Server_1", hardware[7]);
-//secureAlg.secureConnection();
+//secureAlg.secureConnections(20);
 
-//efficientAlg.generateNetwork(8000,88);
+//efficientAlg.generateNetwork(8000,28);
 
 	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {
@@ -379,9 +379,9 @@ function onToolboxLoad() {
 		
 		// Begin by clearing the current directory of nodes
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		nodeModification.clearAll();
+		//nodeModification.clearAll();
 
-		loadConfig("exampleConfig.json")
+		//loadConfig("exampleConfig.json")
 
 		// Get inputs
 		add = document.getElementById('add');
