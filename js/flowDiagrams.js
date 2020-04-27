@@ -238,6 +238,8 @@ naming = function(){
 rename = function (e) {
 	id = e.data.node.id
 	$("#modalcontainer").show();
+	document.getElementById("nodelabel").focus()
+
 	document.getElementById("save").onclick = renamemodal
 	document.getElementById("cancel").onclick = 
 		function () {
@@ -249,19 +251,34 @@ rename = function (e) {
 function renamemodal() {
 	dom.removeEventListener("click", naming)
 	name = $("#nodelabel").val() 
+
+	// Check to see if the node name already exists
+	currentNodes = s.graph.nodes()
+	duplicate = false;
+	for (var i = 0; i < currentNodes.length; i ++) {
+		if (name == currentNodes[i].id) {
+			duplicate = true;
+		}
+	}
+
+	if (duplicate) {
+		errorMessage = "Name already exists";
+		showError();
+	}
 	// check to see if user left node name blank
-	if (name == "") {
+	else if (name == "") {
 		errorMessage = "Please enter a name for the node.";
 		showError();
-
 	}
 	else {
+		nodeModification.rename(s.graph.nodes(id).id, name)
 		s.graph.nodes(id).label = name
 		s.graph.nodes(id).id = name
 		s.refresh()
 		$("#modalcontainer").hide();
 		$("#nodelabel").val("")
 	}
+
 }
 
 updateCoords = function(e) {
