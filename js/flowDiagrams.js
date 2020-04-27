@@ -28,6 +28,9 @@ var efficientAlg = require("./js/efficientAlg.js");
 let rawdata = fs.readFileSync('./hardware_database.json');
 let hardware = JSON.parse(rawdata);
 
+// variable for invidivdual error messages
+var errorMessage = "TEST ERROR -- errorMessage variable is working correctly";
+
 //secureAlg.secureConnections(20);
 
 // efficientAlg.generateNetwork(8000,88);
@@ -35,28 +38,34 @@ let hardware = JSON.parse(rawdata);
 	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
-	nodeModification.clearAll();
-	s.graph.clear()
 
-	if (x != "0") {
-		var sec = document.getElementById("prefSecure").checked;
-		var eff = document.getElementById("prefEfficient").checked;
+	if (x > 30) {
+		console.log("test")
+		errorMessage = "Please enter a number less than 30";
+		showError();
+	} else {
+		nodeModification.clearAll();
+		s.graph.clear()
+
+		if (x != "0") {
+			var sec = document.getElementById("prefSecure").checked;
+			var eff = document.getElementById("prefEfficient").checked;
+		
+			if (sec) {
+				secureAlg.secureConnections(x);
+				loadConfig("nodeList.json")
 	
-		if (sec) {
-			secureAlg.secureConnections(x);
-			loadConfig("nodeList.json")
-
-		} else if (eff) {
-			efficientAlg.generateNetwork(8000,x);
-			loadConfig("nodeList.json")
+			} else if (eff) {
+				efficientAlg.generateNetwork(8000,x);
+				loadConfig("nodeList.json")
+			}
 		}
+		document.getElementById("networkConfig").style.display = "none";
 	}
 
-	document.getElementById("networkConfig").style.display = "none";
+	
 }
 
-// variable for invidivdual error messages
-var errorMessage = "TEST ERROR -- errorMessage variable is working correctly";
 
 
 
