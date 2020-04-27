@@ -28,34 +28,9 @@ var efficientAlg = require("./js/efficientAlg.js");
 let rawdata = fs.readFileSync('./hardware_database.json');
 let hardware = JSON.parse(rawdata);
 
-// create network to be tested for path analysis
-
-/* nodeModification.addNode("Router_1", hardware[1]);
-nodeModification.addNode("Router_2", hardware[2]);
-nodeModification.addNode("Router_3", hardware[2]);
-nodeModification.addNode("Router_4", hardware[0]);
-nodeModification.addNode("Router_5", hardware[0]);
-nodeModification.addNode("Router_6", hardware[1]);
-nodeModification.addNode("Router_7", hardware[2]);
-nodeModification.addNode("Router_8", hardware[1]); */
-
-// error codes: 0 - successful, 1 - one of the routers is invalid, 2 - this connection already exists
-/* status = nodeModification.createConnection("Router_1", "Router_2");
-status = nodeModification.createConnection("Router_1", "Router_3");
-status = nodeModification.createConnection("Router_2", "Router_4");
-status = nodeModification.createConnection("Router_3", "Router_4");
-status = nodeModification.createConnection("Router_4", "Router_5");
-status = nodeModification.createConnection("Router_5", "Router_6");
-status = nodeModification.createConnection("Router_5", "Router_7");
-status = nodeModification.createConnection("Router_7", "Router_8");
- */
-// run path analysis on network
-//analysis.dijksta();
-
-//nodeModification.addNode("Server_1", hardware[7]);
 //secureAlg.secureConnections(20);
 
-//efficientAlg.generateNetwork(8000,28);
+efficientAlg.generateNetwork(8000,88);
 
 	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {
@@ -280,7 +255,7 @@ updateCoords = function(e) {
 }
 
 loadConfig = function(fileName) {
-	nodeModification.clearAll();
+	//nodeModification.clearAll();
 
 	nodeConfig = nodeModification.getNodeConfigByFile(fileName)
 
@@ -381,7 +356,7 @@ function onToolboxLoad() {
 		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
 		//nodeModification.clearAll();
 
-		//loadConfig("exampleConfig.json")
+		loadConfig("nodeList.json")
 
 		// Get inputs
 		add = document.getElementById('add');

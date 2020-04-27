@@ -204,6 +204,24 @@ exports.updateCoords = function(updatedNode) {
 	return 0;
 }
 
+exports.addCoords = function(updatedNode) {
+	const fs = require('fs')
+	let rawdata = fs.readFileSync('./nodeList.json');
+	let hardware = JSON.parse(rawdata);
+
+	for (var i = 0; i < hardware.length; i++) {
+		if (hardware[i].name == updatedNode.name) {
+			hardware[i].xValue = updatedNode.xValue;
+			hardware[i].yValue = updatedNode.yValue;
+		}
+	}
+
+	// update the nodeList.json file with the updated information
+	var newjson = JSON.stringify(hardware);
+	fs.writeFileSync('./nodeList.json', newjson);
+	return 0;
+}
+
 exports.clearAll = function() {
 	console.log("Clearing all nodes")
 

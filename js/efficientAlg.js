@@ -15,6 +15,181 @@ evaulateCost = function(){
 
 }
 
+addCoords = function(){
+    // load in the current network toplogy 
+    const fs = require('fs');
+    let rawdata = fs.readFileSync('./nodeList.json');
+    let nodes = JSON.parse(rawdata);
+
+    // add nodes of each hardware type into their own arrays
+    var routers = [];
+    var switches = [];
+    var workstations = [];
+    var databases = [];
+    var i = 0;
+    var j = 0;
+    var k = 0;
+    var xCoord = 0;
+    var yCoord = 0;
+    var xoffset = 50;
+    var yoffest = 50;
+
+    for (i = 0; i < nodes.length; i++){
+        if (nodes[i].nodeType == "Router"){
+            routers.push(nodes[i]);
+        }
+        else if (nodes[i].nodeType == "Switch"){
+            switches.push(nodes[i]);
+        }
+        else if (nodes[i].nodeType == "Server" && nodes[i].quality == "Low"){
+            workstations.push(nodes[i]);
+        }
+        else{
+            databases.push(nodes[i]);
+        }
+    }
+    console.log(databases);
+    // add x and y coordinates to nodes based on node type
+    
+    // place the edge router
+    routers[0].xValue = -350
+    routers[0].yValue = 0
+    nodeModification.addCoords(routers[0]);
+
+    // now place the switches
+    for (i = 0; i < switches.length; i++){
+        // start at the top and work down max of 4 switches
+        if (i == 0){
+            switches[i].yValue = -225;
+        }
+        else if (i == 1){
+            switches[i].yValue = -75;
+        }
+        else if (i == 2){
+            switches[i].yValue = 75;
+        }
+        else{
+            switches[i].yValue = 225;
+        }
+        nodeModification.addCoords(switches[i]);
+    }
+
+    // now add all the workstations
+    for (i = 0; i < switches.length; i++){
+        if (i == 0){
+            // workstations need to be in the top most zone
+            // add workstations from left to right, top to bottom in that zone
+            xCoord = -250;
+            l = 0;
+            for (j = 0; j < workstations.length; j++){
+                for (k = 0; k < switches[i].connections.length; k++){
+                    if (workstations[j].name == switches[i].connections[k]){
+                        // this workstation is connected to this switch
+                        if (l <= switches[i].connections.length / 2 - 2){
+                            workstations[j].xValue = xCoord;
+                            workstations[j].yValue = -275;
+                            l++;
+                        }
+                        else{
+                            workstations[j].xValue = xCoord - (l * 50);
+                            workstations[j].yValue = -175;
+                        }
+                        xCoord = xCoord + xoffset;
+                        nodeModification.addCoords(workstations[j]);
+                    }
+                }
+            }
+        }
+        else if (i == 1){
+            // workstations need to be in the upper zone
+            // add workstations from left to right, top to bottom in that zone
+            xCoord = -250;
+            l = 0;
+            for (j = 0; j < workstations.length; j++){
+                for (k = 0; k < switches[i].connections.length; k++){
+                    if (workstations[j].name == switches[i].connections[k]){
+                        // this workstation is connected to this switch
+                        if (l <= switches[i].connections.length / 2 - 2){
+                            workstations[j].xValue = xCoord;
+                            workstations[j].yValue = -125;
+                            l++;
+                        }
+                        else{
+                            workstations[j].xValue = xCoord - (l * 50);
+                            workstations[j].yValue = -25;
+                        }
+                        xCoord = xCoord + xoffset;
+                        nodeModification.addCoords(workstations[j]);
+                    }
+                }
+            }
+        }
+    
+        else if (i == 2){
+            // workstations need to be in the lower zone
+            // add workstations from left to right, top to bottom in that zone
+            xCoord = -250;
+            l = 0;
+            for (j = 0; j < workstations.length; j++){
+                for (k = 0; k < switches[i].connections.length; k++){
+                    if (workstations[j].name == switches[i].connections[k]){
+                        // this workstation is connected to this switch
+                        if (l <= switches[i].connections.length / 2 - 2){
+                            workstations[j].xValue = xCoord;
+                            workstations[j].yValue = 25;
+                            l++;
+                        }
+                        else{
+                            workstations[j].xValue = xCoord - (l * 50);
+                            workstations[j].yValue = 125;
+                        }
+                        xCoord = xCoord + xoffset;
+                        nodeModification.addCoords(workstations[j]);
+                    }
+                }
+            }
+        }
+        else{
+            // workstations need to be in the bottom most zone  
+            // add workstations from left to right, top to bottom in that zone
+            xCoord = -250;
+            l = 0;
+            for (j = 0; j < workstations.length; j++){
+                for (k = 0; k < switches[i].connections.length; k++){
+                    if (workstations[j].name == switches[i].connections[k]){
+                        // this workstation is connected to this switch
+                        if (l <= switches[i].connections.length / 2 - 2){
+                            workstations[j].xValue = xCoord;
+                            workstations[j].yValue = 175;
+                            l++;
+                        }
+                        else{
+                            workstations[j].xValue = xCoord - (l * 50);
+                            workstations[j].yValue = 275;
+                        }
+                        xCoord = xCoord + xoffset;
+                        nodeModification.addCoords(workstations[j]);
+                    }
+                }
+            } 
+        }
+    }
+    
+    // now add the database
+    if (databases.length == 2){
+        databases[0].xValue = 325;
+        databases[0].yValue = -100;
+        databases[1].xValue = 325;
+        databases[1].yValue = 100;
+    }
+    else{
+        databases[0].xValue = 325;
+    }
+    for (i = 0; i < databases.length; i++){
+        nodeModification.addCoords(databases[i]);
+    }
+}
+
 exports.generateNetwork = function(budget, workstations){
     // load in the hardware database
     const fs = require('fs');
@@ -144,6 +319,9 @@ exports.generateNetwork = function(budget, workstations){
                 i++;
             }
         }
+    
+    // now add x and y coordinates to all the nodes on the network
+    addCoords();
 
     // evaluate the current cost of the setup
     evaulateCost();
