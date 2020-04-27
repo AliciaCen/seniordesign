@@ -78,35 +78,36 @@ changeCoords = function(){
 
     // organize connected workstations around switches
     // only issues appear here
-    xCoord = (375/(switches.length/2));
+    xCoord = (750/(switches.length/2));
     for (i = 0; i < switches.length; i++){
-        for (j = 0; j < (switches[i].connections.length); j++){
-            xCoord2 = 375/(switches[i].connections.length/2);
-            for(k = 0; k < workstations.length; k++){
+        for (j = 0; j < workstations.length; j++){
+            xCoord2 = xCoord/(switches[i].connections.length/2);
+            for(k = 0; k < switches[i].connections.length; k++){
                 // Place first half above switch and second half below switch
-                if (switches[i].connections.includes(workstations[k].name) && j <= (switches[i].connections.length/2) && i < (switches.length/2)){
-                    workstations[k].xValue = (-375 + (i*xCoord) + (j*xCoord2));
+                if (switches[i].connections.includes(workstations[k].name) && k < (switches[i].connections.length/2) && i < (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i*xCoord) + (k*xCoord2));
                     workstations[k].yValue = -270;
                 }
-                else if (switches[i].connections.includes(workstations[k].name) && j > (switches[i].connections.length/2) && i <= (switches.length/2)){
-                    workstations[k].xValue = (-375 + i*xCoord + (j - switches[i].connections.length/2)*xCoord2);
-                    workstations[k].yValue = -105;
+                else if (switches[i].connections.includes(workstations[k].name) && k > (switches[i].connections.length/2) && i < (switches.length/2)){
+                    workstations[k].xValue = (-375 + i*xCoord + (k - switches[i].connections.length/2)*xCoord2);
+                    workstations[k].yValue = -115;
                 }
                 // Bottom switches
-                else if (switches[i].connections.includes(workstations[k].name) && j < (switches[i].connections.length/2) && i > (switches.length/2)){
-                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + j*xCoord2);
-                    workstations[k].yValue = 105;
+                else if (switches[i].connections.includes(workstations[k].name) && k < (switches[i].connections.length/2) && i >= (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + k*xCoord2);
+                    workstations[k].yValue = 115;
                 }
-                else if (switches[i].connections.includes(workstations[k].name) && j >= (switches[i].connections.length/2) && i >= (switches.length/2)){
-                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + (j - switches[i].connections.length/2)*xCoord2);
+                else if (switches[i].connections.includes(workstations[k].name) && k > (switches[i].connections.length/2) && i >= (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + (k - switches[i].connections.length/2)*xCoord2);
                     workstations[k].yValue = 270;
                 }
+                console.log(i)
             }
         }
     }
 
     // make server coordinates and update
-    yCoord = 100/databases.length;
+    yCoord = 200/databases.length;
     for(i = 0; i < databases.length; i++){
         console.log(databases[i].name)
         databases[i].xValue = 325;
