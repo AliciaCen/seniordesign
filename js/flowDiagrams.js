@@ -36,6 +36,7 @@ let hardware = JSON.parse(rawdata);
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 	nodeModification.clearAll();
+	s.graph.clear()
 
 	if (x != "0") {
 		var sec = document.getElementById("prefSecure").checked;
