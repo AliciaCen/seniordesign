@@ -84,21 +84,21 @@ changeCoords = function(){
             xCoord2 = xCoord/(switches[i].connections.length/2);
             for(k = 0; k < switches[i].connections.length; k++){
                 // Place first half above switch and second half below switch
-                if (switches[i].connections[k] == workstations[j].name && k < (switches[i].connections.length/2) && i < (switches.length/2)){
-                    workstations[j].xValue = (-375 + (i*xCoord) + (k*xCoord2));
+                if (switches[i].connections[k] == workstations[j].name && k <= (switches[i].connections.length/2) && i < (switches.length/2)){
+                    workstations[j].xValue = (-375 + (i*xCoord) + ((k-1)*xCoord2));
                     workstations[j].yValue = -270;
                 }
-                else if (switches[i].connections[k] == workstations[j].name && k >= (switches[i].connections.length/2) && i < (switches.length/2)){
-                    workstations[j].xValue = (-375 + i*xCoord + (k - switches[i].connections.length/2)*xCoord2);
+                else if (switches[i].connections[k] == workstations[j].name && k > (switches[i].connections.length/2) && i < (switches.length/2)){
+                    workstations[j].xValue = (-375 + i*xCoord + (k - 1 - switches[i].connections.length/2)*xCoord2);
                     workstations[j].yValue = -115;
                 }
                 // Bottom switches, console says i gets to 1 which is equal to switches.length/2
-                else if (switches[i].connections[k] == workstations[j].name && k < (switches[i].connections.length/2) && i >= (switches.length/2)){
-                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + k*xCoord2);
+                else if (switches[i].connections[k] == workstations[j].name && k <= (switches[i].connections.length/2) && i >= (switches.length/2)){
+                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + (k - 1)*xCoord2);
                     workstations[j].yValue = 115;
                 }
-                else if (switches[i].connections[k] == workstations[j].name && k >= (switches[i].connections.length/2) && i >= (switches.length/2)){
-                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + (k - switches[i].connections.length/2)*xCoord2);
+                else if (switches[i].connections[k] == workstations[j].name && k > (switches[i].connections.length/2) && i >= (switches.length/2)){
+                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + (k - 1 - switches[i].connections.length/2)*xCoord2);
                     workstations[j].yValue = 270;
                 }
             }
@@ -108,7 +108,6 @@ changeCoords = function(){
     // make server coordinates and update
     yCoord = 200/databases.length;
     for(i = 0; i < databases.length; i++){
-        console.log(databases[i].name)
         databases[i].xValue = 325;
         databases[i].yValue = -100 + i*yCoord;
         nodeModification.addCoords(databases[i]);
@@ -252,7 +251,7 @@ exports.secureConnections = function(workstations){
         }
     }
     for (i = 1; i < firewalls; i++){
-        if (i == 3){
+        if (i == (firewalls-1)){
             nodeModification.createConnection("Firewall_" + i, "Server_0");
             console.log("Connected Firewall_" + i + " to Server_0");
         }
