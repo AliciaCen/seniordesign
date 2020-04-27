@@ -1,6 +1,136 @@
 var Node = require("./Node.js")
 var modifyNodes = require("./modifyNodes.js")
 
+changeCoords = function(){
+    // load in the current network toplogy 
+    const fs = require('fs');
+    let rawdata = fs.readFileSync('./nodeList.json');
+    let nodes = JSON.parse(rawdata);
+
+    // add nodes of each hardware type into their own arrays
+    var routers = [];
+    var switches = [];
+    var workstations = [];
+    var firewalls = []
+    var databases = [];
+    var i = 0;
+    var j = 0;
+    var k = 0;
+    var xCoord = 0;
+    var xCoord2 = 0;
+    var yCoord = 0;
+    var xoffset = 50;
+    var yoffest = 50;
+
+    for (i = 0; i < nodes.length; i++){
+        if (nodes[i].nodeType == "Router"){
+            routers.push(nodes[i]);
+        }
+        else if (nodes[i].nodeType == "Switch"){
+            switches.push(nodes[i]);
+        }
+        else if (nodes[i].nodeType == "Server" && nodes[i].quality == "Low"){
+            workstations.push(nodes[i]);
+        }
+        else if (nodes[i].nodeType == "Firewall"){
+            firewalls.push(nodes[i]);
+        }
+        else{
+            databases.push(nodes[i]);
+        }
+    }
+
+    // place edge router in center and connected firewall off to left
+    for (i = 0; i < routers.length; i++){
+        if (routers[i].name == "Edge Router"){
+            routers[i].xValue = 0;
+            routers[i].yValue = 0;
+            nodeModification.addCoords(routers[i]);
+        }
+    }
+
+    for (i = 0; i < firewalls.length; i++){
+        if (firewalls[i].name == "Firewall_0"){
+            firewalls[i].xValue = -100;
+            firewalls[i].yValue = 0;
+        }
+    }
+
+    // setup switches and firewalls into position
+    xCoord = 375/(switches.length/2);
+    for (i = 0; i < switches.length; i++){
+        if(i < (switches.length/2)){
+            switches[i].xValue = (-375 + (i+1)*xCoord);
+            switches[i].yValue = (-187.5);
+        }
+        else {
+            switches[i].xValue = (-375 + (i-(switches.length)/2 + 1)*xCoord);
+            switches[i].yValue = (187.5);
+        }
+        for (j = 0; j < firewalls.length; j++){
+            if (switches[i].connections.includes(firewalls[j].name)){
+                firewalls[j].yValue = switches[i].yValue;
+                firewalls[j].xValue = (switches[i].xValue + 25);
+            }
+        }
+        nodeModification.addCoords(switches[i]);
+    }
+
+    // organize connected workstations around switches
+    // only issues appear here
+    xCoord = (375/(switches.length/2));
+    for (i = 0; i < switches.length; i++){
+        for (j = 0; j < (switches[i].connections.length); j++){
+            xCoord2 = 375/(switches[i].connections.length/2);
+            for(k = 0; k < workstations.length; k++){
+                // Place first half above switch and second half below switch
+                if (switches[i].connections.includes(workstations[k].name) && j <= (switches[i].connections.length/2) && i < (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i*xCoord) + (j*xCoord2));
+                    workstations[k].yValue = -270;
+                }
+                else if (switches[i].connections.includes(workstations[k].name) && j > (switches[i].connections.length/2) && i <= (switches.length/2)){
+                    workstations[k].xValue = (-375 + i*xCoord + (j - switches[i].connections.length/2)*xCoord2);
+                    workstations[k].yValue = -105;
+                }
+                // Bottom switches
+                else if (switches[i].connections.includes(workstations[k].name) && j < (switches[i].connections.length/2) && i > (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + j*xCoord2);
+                    workstations[k].yValue = 105;
+                }
+                else if (switches[i].connections.includes(workstations[k].name) && j >= (switches[i].connections.length/2) && i >= (switches.length/2)){
+                    workstations[k].xValue = (-375 + (i - switches.length/2)*xCoord + (j - switches[i].connections.length/2)*xCoord2);
+                    workstations[k].yValue = 270;
+                }
+            }
+        }
+    }
+
+    // make server coordinates and update
+    yCoord = 100/databases.length;
+    for(i = 0; i < databases.length; i++){
+        console.log(databases[i].name)
+        databases[i].xValue = 325;
+        databases[i].yValue = -100 + i*yCoord;
+        nodeModification.addCoords(databases[i]);
+        for (j = 0; j < firewalls.length; j++){
+            if (databases[i].connections.includes(firewalls[j].name)){
+                firewalls[j].yValue = 0;
+                firewalls[j].xValue = 125;
+            }
+        }
+    }
+
+    // update coordinates of workstations
+    for (i = 0; i < workstations.length; i++){
+        nodeModification.addCoords(workstations[i]);
+    }
+
+    // update coordinates of firewalls
+    for (i = 0; i < firewalls.length; i++){
+        nodeModification.addCoords(firewalls[i]);
+    }
+}
+
 exports.secureConnections = function(workstations){
     // load in the hardware database
     const fs = require('fs');
@@ -144,5 +274,7 @@ exports.secureConnections = function(workstations){
         else{
             i++;
         }
-	}
+    }
+    // update coordinates to display nodes properly
+    changeCoords();
 }
