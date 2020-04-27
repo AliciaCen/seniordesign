@@ -41,7 +41,7 @@ function demoNodeNum() {
 
 	if (x > 30) {
 		console.log("test")
-		errorMessage = "Please enter a number less than 30";
+		errorMessage = "Please enter a number less than or equal 30";
 		showError();
 	} else {
 		nodeModification.clearAll();
