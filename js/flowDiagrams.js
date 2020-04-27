@@ -30,12 +30,28 @@ let hardware = JSON.parse(rawdata);
 
 //secureAlg.secureConnections(20);
 
-efficientAlg.generateNetwork(8000,88);
+// efficientAlg.generateNetwork(8000,88);
 
 	// The function below is just to display the number of nodes the user enters. This function is only for demonstration purposes and will be removed. 
 function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
-	document.getElementById("demo").innerHTML = x;
+	nodeModification.clearAll();
+
+	if (x != "0") {
+		var sec = document.getElementById("prefSecure").checked;
+		var eff = document.getElementById("prefEfficient").checked;
+	
+		if (sec) {
+			secureAlg.secureConnections(x);
+			loadConfig("nodeList.json")
+
+		} else if (eff) {
+			efficientAlg.generateNetwork(8000,x);
+			loadConfig("nodeList.json")
+		}
+	}
+
+	document.getElementById("networkConfig").style.display = "none";
 }
 
 // variable for invidivdual error messages
@@ -351,12 +367,6 @@ var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
 function onToolboxLoad() {
 	if ($('#toolbox').length) {
 		clearInterval(timer);
-		
-		// Begin by clearing the current directory of nodes
-		// EVENTUALLY WE NEED TO FIGURE OUT SAVING/LOADING
-		//nodeModification.clearAll();
-
-		loadConfig("nodeList.json")
 
 		// Get inputs
 		add = document.getElementById('add');
