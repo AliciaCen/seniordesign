@@ -50,7 +50,7 @@ changeCoords = function(){
     }
 
     for (i = 0; i < firewalls.length; i++){
-        if (firewalls[i].name == "Firewall_0"){
+        if (firewalls[i].name == "FW_0"){
             firewalls[i].xValue = -100;
             firewalls[i].yValue = 0;
         }
@@ -160,7 +160,7 @@ exports.secureConnections = function(workstations){
     // create the internet facing firewall
     for (i = 0; i < hardware.length; i++){
         if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 100)){
-            nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+            nodeModification.addNode("FW_" + firewalls, hardware[i]);
             firewalls++;
         }
     }
@@ -179,7 +179,7 @@ exports.secureConnections = function(workstations){
             // add a 16 port switch
             for (i = 0; i < hardware.length; i++){
                 if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Medium")){
-                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    nodeModification.addNode("SW_" + switches, hardware[i]);
                     // switches is used for the enumeration of switch names
                     switches++;
                 }
@@ -188,7 +188,7 @@ exports.secureConnections = function(workstations){
 			// create proper firewall for 16 port switches
 			for (i = 0; i < hardware.length; i++){
         		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 25)){
-            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+            		nodeModification.addNode("FW_" + firewalls, hardware[i]);
 					firewalls++;
         		}
     		}
@@ -197,7 +197,7 @@ exports.secureConnections = function(workstations){
             // add an 8 port switch
             for (i = 0; i < hardware.length; i++){
                 if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Low")){
-                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    nodeModification.addNode("SW_" + switches, hardware[i]);
                     // switches is used for the enumeration of switch names
                     switches++;
                 }
@@ -206,7 +206,7 @@ exports.secureConnections = function(workstations){
 			// create proper firewall for 8 port switches
 			for (i = 0; i < hardware.length; i++){
         		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 10)){
-            		nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+            		nodeModification.addNode("FW_" + firewalls, hardware[i]);
 					firewalls++;
         		}
     		}
@@ -217,14 +217,14 @@ exports.secureConnections = function(workstations){
     // for now there will only be one data server
     for (i = 0; i < hardware.length; i++){
         if ((hardware[i].nodeType == "Server") && (hardware[i].quality == "Medium")){
-            nodeModification.addNode("Server_" + servers, hardware[i]);
+            nodeModification.addNode("SE_" + servers, hardware[i]);
         }
     }
 	
 	// add a firewall for the server zone
 	for (i = 0; i < hardware.length; i++){
 		if ((hardware[i].nodeType == "Firewall") && (hardware[i].users == 10)){
-			nodeModification.addNode("Firewall_" + firewalls, hardware[i]);
+			nodeModification.addNode("FW_" + firewalls, hardware[i]);
 			firewalls++;
 		}
     }
@@ -233,7 +233,7 @@ exports.secureConnections = function(workstations){
     for (i = 0; i < hardware.length; i++){
         if (hardware[i].nodeType == "Server" && hardware[i].quality == "Low"){
             while (nodes < workstations){
-                nodeModification.addNode("workstation_" + nodes, hardware[i]);
+                nodeModification.addNode("WS_" + nodes, hardware[i]);
                 nodes++;
             }
         }
@@ -245,17 +245,17 @@ exports.secureConnections = function(workstations){
 
     nodes = 0;
     while (nodes < firewalls){
-        if (nodeModification.createConnection("Firewall_" + nodes, "Edge Router") == 0){
+        if (nodeModification.createConnection("FW_" + nodes, "Edge Router") == 0){
             console.log("Connected Firewall_" + nodes + " to Edge Router");
             nodes++;
         }
     }
     for (i = 1; i < firewalls; i++){
         if (i == (firewalls-1)){
-            nodeModification.createConnection("Firewall_" + i, "Server_0");
+            nodeModification.createConnection("FW_" + i, "SE_0");
         }
         else{
-            nodeModification.createConnection("Firewall_" + i, "Switch_" + (i - 1));
+            nodeModification.createConnection("FW_" + i, "SW_" + (i - 1));
         }
     }
 
@@ -264,7 +264,7 @@ exports.secureConnections = function(workstations){
     nodes = 0;
     i = 0;
     while (nodes < workstations){
-        if (nodeModification.createConnection("Switch_" + i, "workstation_" + nodes) == 0){
+        if (nodeModification.createConnection("SW_" + i, "WS_" + nodes) == 0){
             nodes++;
         }
         else{
