@@ -63,7 +63,7 @@ addCoords = function(){
             switches[i].yValue = -225;
         }
         else if (i == 1){
-            switches[i].yValue = -75;
+            switches[i].yValue = 225;
         }
         else if (i == 2){
             switches[i].yValue = 75;
@@ -111,12 +111,12 @@ addCoords = function(){
                         // this workstation is connected to this switch
                         if (l <= switches[i].connections.length / 2 - 2){
                             workstations[j].xValue = xCoord;
-                            workstations[j].yValue = -125;
+                            workstations[j].yValue = 175;
                             l++;
                         }
                         else{
                             workstations[j].xValue = xCoord - (l * 50);
-                            workstations[j].yValue = -25;
+                            workstations[j].yValue = 275;
                         }
                         xCoord = xCoord + xoffset;
                         nodeModification.addCoords(workstations[j]);
@@ -300,7 +300,7 @@ exports.generateNetwork = function(budget, workstations){
     for (i = 0; i < hardware.length; i++){
         if (hardware[i].nodeType == "Server" && hardware[i].quality == "Low"){
             while (nodes < workstations){
-                nodeModification.addNode("workstation_" + nodes, hardware[i]);
+                nodeModification.addNode("WS_" + nodes, hardware[i]);
                 console.log("Created workstation_" + nodes);
                 nodes++;
             }
@@ -311,7 +311,7 @@ exports.generateNetwork = function(budget, workstations){
     nodes = 0;
     i = 0;
         while (nodes < workstations){
-            if (nodeModification.createConnection("Switch_" + i, "workstation_" + nodes) == 0){
+            if (nodeModification.createConnection("Switch_" + i, "WS_" + nodes) == 0){
                 console.log("Connected workstation_" + nodes + " to Switch_" + i);
                 nodes++;
             }
