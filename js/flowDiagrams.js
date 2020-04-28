@@ -172,7 +172,11 @@ connectionStart = function (e) {
 			
 			s.unbind('clickNode', connectionComplete);
 			s.bind('clickNode', connectionStart);
+		}else if (result == 3){
+			errorMessage = "Connection failed: No more connections available.";
+			showError();
 		}
+		
 	}
 
 	console.log("Initializing connection from node " + toConnect);
