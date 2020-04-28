@@ -98,7 +98,7 @@ changeCoords = function(){
                     workstations[j].yValue = -270;
                 }
                 else if (switches[i].connections[k] == workstations[j].name && k > (switches[i].connections.length/2) && i < (switches.length/2)){
-                    workstations[j].xValue = (-375 + i*xCoord + ((k - 1) - switches[i].connections.length/2)*xCoord2);
+                    workstations[j].xValue = (-375 + i*xCoord + (k - switches[i].connections.length/2)*xCoord2);
                     workstations[j].yValue = -115;
                 }
                 // Bottom switches
@@ -107,7 +107,7 @@ changeCoords = function(){
                     workstations[j].yValue = 115;
                 }
                 else if (switches[i].connections[k] == workstations[j].name && k > (switches[i].connections.length/2) && i >= (switches.length/2)){
-                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + ((k - 1) - switches[i].connections.length/2)*xCoord2);
+                    workstations[j].xValue = (-375 + (i - switches.length/2)*xCoord + (k - switches[i].connections.length/2)*xCoord2);
                     workstations[j].yValue = 270;
                 }
             }
