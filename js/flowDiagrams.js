@@ -46,6 +46,7 @@ function demoNodeNum() {
 	} else {
 		nodeModification.clearAll();
 		s.graph.clear()
+		s.refresh()
 
 		if (x != "0") {
 			var sec = document.getElementById("prefSecure").checked;
@@ -80,33 +81,114 @@ function showError() {
 		}
 }
 
+sigma.utils.pkg('sigma.canvas.nodes');
+sigma.canvas.nodes.image = (function() {
+	var _cache = {},
+		_loading = {},
+		_callbacks = {};
+
+	// Return the renderer itself:
+	var renderer = function(node, context, settings) {
+		var args = arguments,
+			prefix = settings('prefix') || '',
+			size = node[prefix + 'size'],
+			color = node.color || settings('defaultNodeColor'),
+			url = node.url;
+
+		if (_cache[url]) {
+			context.save();
+
+			// Draw the image
+			context.drawImage(
+				_cache[url],
+				node[prefix + 'x'] - size,
+				node[prefix + 'y'] - size,
+				2 * size,
+				2 * size
+			);
+
+			// Quit the "clipping mode":
+			context.restore();
+
+		} else {
+			sigma.canvas.nodes.image.cache(url);
+			sigma.canvas.nodes.def.apply(
+				sigma.canvas.nodes,
+				args
+			);
+		}
+	};
+
+	// Let's add a public method to cache images, to make it possible to
+	// preload images before the initial rendering:
+	renderer.cache = function(url, callback) {
+		if (callback)
+			_callbacks[url] = callback;
+
+		if (_loading[url])
+			return;
+
+		var img = new Image();
+
+		img.onload = function() {
+			_loading[url] = false;
+			_cache[url] = img;
+
+			if (_callbacks[url]) {
+				_callbacks[url].call(this, img);
+				delete _callbacks[url];
+			}
+		};
+
+		_loading[url] = true;
+		img.src = url;
+	};
+
+	return renderer;
+})();
 
 var s,
+	cam,
+	dom,
 	g = {
 		nodes: [],
 		edges: []
 	},
-	n = 0;
+	n = 0,
+	images = [
+		"img/circle.png",
+		"img/triangle.png",
+		"img/square.png",
+		"img/hexagon.png"
+	],
+	loaded = 0;
 
 
-// Instantiate sigma:
-s = new sigma({
-	graph: g,
-	renderer: {
-		container: document.getElementById('graph-container'),
-		type: 'canvas'
-	},
-	settings: {
-		autoRescale: false,
-		doubleClickEnabled: false,
-		minEdgeSize: 0.5,
-		maxEdgeSize: 4,
-		enableEdgeHovering: true
-	}
+images.forEach(function(url) {
+	sigma.canvas.nodes.image.cache(
+		url,
+		function() {
+			if (++loaded === images.length) {
+				s = new sigma({
+					graph: g,
+					renderer: {
+						container: document.getElementById('graph-container'),
+						type: 'canvas'
+					},
+					settings: {
+						autoRescale: false,
+						doubleClickEnabled: false,
+						minEdgeSize: 0.5,
+						maxEdgeSize: 4,
+						enableEdgeHovering: true
+					}
+				});
+				dom = document.querySelector('#graph-container canvas:last-child');
+				cam = s.camera;
+			}
+		}
+	);
 });
-dom = document.querySelector('#graph-container canvas:last-child');
-cam = s.camera;
-
 
 // Helper Functions
 addNode = function (e) {
@@ -200,7 +282,8 @@ removeEdge = function(e){
 }
 
 naming = function(){
-	name = $("#nodelabel").val() 
+	name = $("#nodelabel").val()
+	hardwareType = $("#hardwareType").val()
 	// check to see if user left node name blank
 	if (name == "") {
 		errorMessage = "Please enter a name for the node.";
@@ -224,28 +307,46 @@ naming = function(){
 		else {
 			document.getElementById("save").removeEventListener("click", naming);
 
-			nodeModification.addNode(name, hardware[1], newx, newy);
+			var imgIndex = 0
+			var hardwareIndex = 1
+			switch (hardwareType) {
+				case "Workstation":
+					imgIndex = 0;
+					hardwareIndex = 6;
+					break;
+				case "Router":
+					imgIndex = 1;
+					hardwareIndex = 0;
+					break;
+				case "Switch":
+					imgIndex = 1;
+					hardwareIndex = 4;
+					break;
+				case "Server":
+					imgIndex = 2;
+					hardwareIndex = 7;
+					break;
+				case "Firewall":
+					imgIndex = 3;
+					hardwareIndex = 10;
+			}
+			
+			nodeModification.addNode(name, hardware[hardwareIndex], newx, newy);
 
-			console.log("Creating node " + name);
-	
 			s.graph.addNode({
 				id: (id = name),
 				label: name,
 				size: 10,
+				type: 'image',
+				url: images[imgIndex],
 				x: newx,
 				y: newy,
-				color: '#666'
 			});
 			s.refresh()
 			$("#nodelabel").val("")
 			$("#modalcontainer").hide();
 		}
 	}
-	// TODO:
-	// - Define Chosen Hardware
-	// - Function accepts Coordinate System
-	
-
 
 }
 
@@ -309,13 +410,37 @@ loadConfig = function(fileName) {
 	// Add all nodes to the canvas
 	for (var i = 0; i < nodeConfig.length; i++) {
 		n = nodeConfig[i]
+
+		hardwareType = n.nodeType
+		if(hardwareType == "Server" && n.quality == "Low") {
+			hardwareType = "Workstation"
+		}
+		imgIndex = 0
+		switch (hardwareType) {
+			case "Workstation":
+				imgIndex = 0;
+				break;
+			case "Router":
+				imgIndex = 1;
+				break;
+			case "Switch":
+				imgIndex = 1;
+				break;
+			case "Server":
+				imgIndex = 2;
+				break;
+			case "Firewall":
+				imgIndex = 3;
+		}
+
 		s.graph.addNode({
 			id: (id = n.name),
 			label: n.name,
 			size: 10,
+			type: 'image',
+			url: images[imgIndex],
 			x: n.xValue,
 			y: n.yValue,
-			color: '#666'
 		});
 
 	}
@@ -390,14 +515,14 @@ function endMove(move) {
 
 // Mode listeners
 
-s.bind('doubleClickNode', rename); // Currently always active
-
 // Wait until the Toolbox is loaded
 var timer = setInterval(onToolboxLoad, 100); // Check every 100ms
 
 function onToolboxLoad() {
 	if ($('#toolbox').length) {
 		clearInterval(timer);
+
+		s.bind('doubleClickNode', rename); // Currently always active
 
 		// Get inputs
 		add = document.getElementById('add');
