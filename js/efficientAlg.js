@@ -60,10 +60,10 @@ addCoords = function(){
     for (i = 0; i < switches.length; i++){
         // start at the top and work down max of 4 switches
         if (i == 0){
-            switches[i].yValue = -225;
+            switches[i].yValue = -175;
         }
         else if (i == 1){
-            switches[i].yValue = 225;
+            switches[i].yValue = 175;
         }
         else if (i == 2){
             switches[i].yValue = 75;
@@ -87,12 +87,12 @@ addCoords = function(){
                         // this workstation is connected to this switch
                         if (l <= switches[i].connections.length / 2 - 2){
                             workstations[j].xValue = xCoord;
-                            workstations[j].yValue = -275;
+                            workstations[j].yValue = -225;
                             l++;
                         }
                         else{
                             workstations[j].xValue = xCoord - (l * 50);
-                            workstations[j].yValue = -175;
+                            workstations[j].yValue = -125;
                         }
                         xCoord = xCoord + xoffset;
                         nodeModification.addCoords(workstations[j]);
@@ -111,12 +111,12 @@ addCoords = function(){
                         // this workstation is connected to this switch
                         if (l <= switches[i].connections.length / 2 - 2){
                             workstations[j].xValue = xCoord;
-                            workstations[j].yValue = 175;
+                            workstations[j].yValue = 125;
                             l++;
                         }
                         else{
                             workstations[j].xValue = xCoord - (l * 50);
-                            workstations[j].yValue = 275;
+                            workstations[j].yValue = 225;
                         }
                         xCoord = xCoord + xoffset;
                         nodeModification.addCoords(workstations[j]);

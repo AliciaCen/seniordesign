@@ -95,7 +95,7 @@
     "quality": "Low", 
     "nodeType": "Server", 
     "WANports": 0, 
-    "LANports": 4, 
+    "LANports": 2, 
     "ethbitRate": 1000, 
     "lobitRate": 0, 
     "hibitRate": 0, 
