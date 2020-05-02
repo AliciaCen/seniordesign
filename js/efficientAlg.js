@@ -30,9 +30,7 @@ addCoords = function(){
     var j = 0;
     var k = 0;
     var xCoord = 0;
-    var yCoord = 0;
     var xoffset = 50;
-    var yoffest = 50;
 
     for (i = 0; i < nodes.length; i++){
         if (nodes[i].nodeType == "Router"){
@@ -48,7 +46,6 @@ addCoords = function(){
             databases.push(nodes[i]);
         }
     }
-    console.log(databases);
     // add x and y coordinates to nodes based on node type
     
     // place the edge router
@@ -211,7 +208,6 @@ exports.generateNetwork = function(budget, workstations){
     for (i = 0; i < hardware.length; i++){
         if ((hardware[i].nodeType == "Router") && (hardware[i].ethbitRate == 1000)){
             nodeModification.addNode("Edge Router", hardware[i]);
-            console.log("Added a router connected to the Internet.");
         }
     }
     
@@ -223,37 +219,34 @@ exports.generateNetwork = function(budget, workstations){
             // add a 24 port switch
             for (i = 0; i < hardware.length; i++){
                 if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "High")){
-                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    nodeModification.addNode("SW_" + switches, hardware[i]);
                     // switches is used for the enumeration of switch names
                     switches++;
                 }
             }
             connected = connected + 22;
-            console.log("Added a 24 port switch");
         }
         else if (workstations - connected > 6){
             // add a 16 port switch
             for (i = 0; i < hardware.length; i++){
                 if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Medium")){
-                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    nodeModification.addNode("SW_" + switches, hardware[i]);
                     // switches is used for the enumeration of switch names
                     switches++;
                 }
             }
             connected = connected + 14;
-            console.log("Added a 16 port switch");
         }
         else if (workstations - connected <= 6 ){
             // add an 8 port switch
             for (i = 0; i < hardware.length; i++){
                 if ((hardware[i].nodeType == "Switch") && (hardware[i].quality == "Low")){
-                    nodeModification.addNode("Switch_" + switches, hardware[i]);
+                    nodeModification.addNode("SW_" + switches, hardware[i]);
                     // switches is used for the enumeration of switch names
                     switches++;
                 }
             }
             connected = connected + 6;
-            console.log("Added an 8 port switch");
         }
     }
     // next add data servers for intra-network file sharing. Low quailty is for workstations, medium and high quaility are for servers
@@ -263,8 +256,7 @@ exports.generateNetwork = function(budget, workstations){
         // add a data server to accomadate additional switches
         for (i = 0; i < hardware.length; i++){
             if ((hardware[i].nodeType == "Server") && (hardware[i].quality == "Medium")){
-                nodeModification.addNode("Server_" + servers, hardware[i]);
-                console.log("Added a data server.");
+                nodeModification.addNode("SE_" + servers, hardware[i]);
             }
         }
         switchSpace = switchSpace + 2;
@@ -274,34 +266,28 @@ exports.generateNetwork = function(budget, workstations){
 
     // make connections between the edge router, switches, and the server
     for (i = 0; i < switches; i++){
-        nodeModification.createConnection("Edge Router", "Switch_" + i);
+        nodeModification.createConnection("Edge Router", "SW_" + i);
     }
-    console.log("Edge Router has been connected to all the switches.");
 
     // now connect all the switches to the data server(s)
     // each data server in this configuration can accomodate 2 switches
     j = 0;
     for (i = 0; i < switches; i++){
         if (i < 2){
-            nodeModification.createConnection("Switch_" + i, "Server_" + j)
+            nodeModification.createConnection("SW_" + i, "SE_" + j)
         }
         if (i == 1){
             j++
         }
         if (i >= 2){
-            nodeModification.createConnection("Switch_" + i, "Server_" + j)
+            nodeModification.createConnection("SW_" + i, "SE_" + j)
         }
-        console.log("Connected Switch_" + i + " to Server_" + j);
     }
-
-    console.log("All switches have been connected to the data server(s).");
-
     // create all the workstations with the low quality server hardware
     for (i = 0; i < hardware.length; i++){
         if (hardware[i].nodeType == "Server" && hardware[i].quality == "Low"){
             while (nodes < workstations){
                 nodeModification.addNode("WS_" + nodes, hardware[i]);
-                console.log("Created workstation_" + nodes);
                 nodes++;
             }
         }
@@ -311,8 +297,7 @@ exports.generateNetwork = function(budget, workstations){
     nodes = 0;
     i = 0;
         while (nodes < workstations){
-            if (nodeModification.createConnection("Switch_" + i, "WS_" + nodes) == 0){
-                console.log("Connected workstation_" + nodes + " to Switch_" + i);
+            if (nodeModification.createConnection("SW_" + i, "WS_" + nodes) == 0){
                 nodes++;
             }
             else{

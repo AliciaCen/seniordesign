@@ -72,6 +72,10 @@ module.exports = class Node {
 	get price() { return this.#price };
 	set price(price) { this.#price = price };
 
+	get users() { return this.#users };
+	set users(users) { this.#users = users };
+
+
 	get xValue() { return this.#xValue };
 	set xValue(xValue) { 
 		if (Number.isInteger(xValue))

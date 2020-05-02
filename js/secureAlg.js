@@ -19,8 +19,6 @@ changeCoords = function(){
     var xCoord = 0;
     var xCoord2 = 0;
     var yCoord = 0;
-    var xoffset = 50;
-    var yoffest = 50;
 
     for (i = 0; i < nodes.length; i++){
         if (nodes[i].nodeType == "Router"){
@@ -151,7 +149,6 @@ exports.secureConnections = function(workstations){
     var switches = 0;
 	var servers = 0;
 	var firewalls = 0;
-    var switchSpace = 0;
     var nodes = 0;
     var connected = 0;
 
