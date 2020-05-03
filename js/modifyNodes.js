@@ -17,7 +17,6 @@ exports.addNode = function(name, data, x, y){
 	var i;
 	for (i = 0; i < hardware.length; i++){
 		if (hardware[i].name == name){
-			console.log("A node by this name already exists");
 			return;
 		}
 	}
@@ -101,29 +100,24 @@ exports.createConnection = function(node1, node2){
 	}
 	// if either index is still null, then one of the node names is invalid
 	if(firstIndex == null || secondIndex == null){
-		console.log("One of the router names is invalid.");
 		return 1;
 	}
 	// now check to see if that connection already exists 
 	for (i = 0; i < hardware[firstIndex].connections.length; i++){
 		if (hardware[firstIndex].connections[i] == node2){
-			console.log("This connection already exists.");
 			return 2;
 		}
 	}
 	for (i = 0; i < hardware[secondIndex].connections.length; i++){
 		if (hardware[secondIndex].connections[i] == node1){
-			console.log("This connection already exists.");
 			return 2;
 		}
 	}
 	// next check to see if there is an available connection
 	if (hardware[firstIndex].connections.length == hardware[firstIndex].LANports){
-		console.log("The node " + hardware[firstIndex].name + " has no availbe space for a new connection.")
 		return 3;
 	}
 	if (hardware[secondIndex].connections.length == hardware[secondIndex].LANports){
-		console.log("The node " + hardware[secondIndex].name + " has no availbe space for a new connection.")
 		return 3;
 	}
 	// add the name of node2 to the list of connections for node1 and vice versa.
@@ -160,12 +154,10 @@ exports.deleteConnection = function(node1, node2){
 	}
 	// if either index is still null, then one of the node names is invalid
 	if(firstIndex == null || secondIndex == null){
-		console.log("One of the router names is invalid.");
 		return;
 	}
 	// check to see if there is a connection between node1 and node2
 	if (hardware[firstIndex].connections.includes(node2) != true){
-		console.log("This connection does not exist.");
 		return;
 	}
 	// remove the connection from both nodes
@@ -240,7 +232,6 @@ exports.addCoords = function(updatedNode) {
 }
 
 exports.clearAll = function() {
-	console.log("Clearing all nodes")
 
 	// Load the file
 	const fs = require('fs')

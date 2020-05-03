@@ -40,7 +40,6 @@ function demoNodeNum() {
 	var x = document.getElementById("nodeNumber").value;
 
 	if (x > 30) {
-		console.log("test")
 		errorMessage = "Please enter a number less than or equal 30";
 		showError();
 	} else {
@@ -214,7 +213,6 @@ addNode = function (e) {
 
 removeNode = function (e) {
 	nodeName = e.data.node.id
-	console.log("Removing node " + nodeName)
 
 	// TODO:
 	// Make a "Clear all" function
@@ -250,7 +248,6 @@ connectionStart = function (e) {
 			});
 			s.refresh();
 			
-			console.log("Connection from node " + src + " to " + tgt + " created.");
 			
 			s.unbind('clickNode', connectionComplete);
 			s.bind('clickNode', connectionStart);
@@ -261,7 +258,6 @@ connectionStart = function (e) {
 		
 	}
 
-	console.log("Initializing connection from node " + toConnect);
 
 	s.unbind('clickNode', connectionStart);
 	s.bind('clickNode', connectionComplete);
@@ -271,7 +267,6 @@ removeEdge = function(e){
 	src = e.data.edge.source;
 	tgt = e.data.edge.target;
 
-	console.log("Removing edge between nodes " + src + " and " + tgt);
 
 	// TODO:
 	// None (For now)

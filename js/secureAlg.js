@@ -243,7 +243,6 @@ exports.secureConnections = function(workstations){
     nodes = 0;
     while (nodes < firewalls){
         if (nodeModification.createConnection("FW_" + nodes, "Edge Router") == 0){
-            console.log("Connected Firewall_" + nodes + " to Edge Router");
             nodes++;
         }
     }
