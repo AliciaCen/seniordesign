@@ -35,8 +35,8 @@
             <br><br>
 
             <p>
-                In ProtoNet, a network with <i>efficiency</i> selected will prioritize data rate transfer across the network. This typically results in a network
-                where nodes have many connections between them, while still being readable.
+                In ProtoNet, a network with <i>efficiency</i> selected will prioritize data rate transfer across the network. This results in a network
+                where nodes have many connections between them. ProtoNet organizes this type of layout to have a high number of connections while still being readable.
             </p>
             <p>
                 Within the scope of ProtoNet, a <i>secure</i> network is defined as a network that has a layout that will reduce the impact of malware attempting to spread
@@ -60,6 +60,7 @@
         <div>
             <center>
                 <img src="SecureExtendedStar.png" alt="Secure 2-Server Configuration">
+            </center>
                 <br><br>
                 <p>
                     This is an example of a secure configuration with one server. It is a variation of a star topology where each node connected to the server has additional
@@ -72,7 +73,9 @@
                     infection, minimizing any potential damage.
                 </p>
                 <br><br><br><br>
+            <center>
                 <img src="Secure2Servers.png" alt="Secure Extended Star Configuration">
+            </center>
                 <br><br>
                 <p>
                     This configuration is similar to the previous one, except there is an additional server included. However, each centralized node needs special consideration
@@ -81,33 +84,18 @@
                     immediately compromised as well.
                 </p>
                 <p>This layout still has a low average node-to-server distance, while utilizing the additional resources that the second server provides. </p>
-
+            <br />
+            <h3>Network Segmentation Using Firewalls</h3>
+            <p>ProtoNet uses network segmentation to make generated networks more secure. This method involves seperating a network into zones seperated by firewalls. 
+            The firewalls act as barriers between those zones, acting as additional protection from malware. Therefore, if one zone was to become infected, the firewalls would prevent  
+            any further spread. Segmenting the network in this way is an effective security measure. </p>
 
                 <br><br><br><br>
-
-            </center>
         </div>
     </div>
 
     <div id="errorPopup"></div>
 
-    <!--The code below is identical to errormodal.html. It is included on this page while we determine how to -->
-    <!--<button class="open-button" id="openError">Open Error</button>
-
-    <div class="modal-content" id="errorPopup">
-        <div class="error-header">
-            <h4>Error</h4>
-        </div>
-        <div class="modal-body">
-            <p>ProtoNet has encountered an error that requires your attention:</p>
-            ** errorInfo is where the specific error information will be displayed. The variable it gets this info from (errorMessage) is located in flowDiagrams.js
-            <p id="errorInfo"></p>
-            <p>Press Okay to continue.</p>
-        </div>
-        <div class="error-footer">
-            <button type="button" id="closeError" class="btn btn-secondary" data-dismiss="modal">Okay</button>
-        </div>
-    </div>-->
 
 </body>
 </html>
